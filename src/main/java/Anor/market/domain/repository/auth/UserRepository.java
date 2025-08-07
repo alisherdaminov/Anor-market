@@ -1,4 +1,4 @@
-package Anor.market.domain.repository;
+package Anor.market.domain.repository.auth;
 
 import Anor.market.domain.model.entity.auth.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

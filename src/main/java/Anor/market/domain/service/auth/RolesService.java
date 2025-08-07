@@ -1,4 +1,4 @@
-package Anor.market.domain.service;
+package Anor.market.domain.service.auth;
 
 
 import Anor.market.shared.enums.Roles;

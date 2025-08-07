@@ -1,11 +1,15 @@
 package Anor.market.application.dto.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
 
@@ -17,5 +21,6 @@ public class UserDTO {
     private String phoneNumber;
     private boolean isGender;
     private boolean isSeller;
+    private LocalDateTime createdAt;
 
 }

@@ -1,12 +1,12 @@
-package Anor.market.application.service;
+package Anor.market.application.service.auth;
 
 import Anor.market.application.dto.auth.create.UserCreatedDTO;
 import Anor.market.application.dto.auth.dto.UserDTO;
 import Anor.market.application.mapper.auth.AuthMapper;
 import Anor.market.domain.model.entity.auth.UserEntity;
-import Anor.market.domain.repository.RolesRepository;
-import Anor.market.domain.repository.UserRepository;
-import Anor.market.domain.service.UserService;
+import Anor.market.domain.repository.auth.RolesRepository;
+import Anor.market.domain.repository.auth.UserRepository;
+import Anor.market.domain.service.auth.AuthService;
 import Anor.market.infrastucture.config.validation.JwtTokens;
 import Anor.market.presentation.request.LoginCreatedDTO;
 import Anor.market.presentation.response.AppResponse;
@@ -17,29 +17,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
- * this is UserServiceImpl implements UserService and users can register and log in after successful registrations
+ * this is AuthServiceImpl implements AuthService and users can register and log in after successful registrations
  * Then, The user has got a few opportunities to update and log out of the system
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AuthMapper authMapper;
+    private RolesRepository rolesRepository;
     @Autowired
     private RolesServiceImpl rolesService;
     @Autowired
+    private RefreshTokenServiceImpl refreshTokenService;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private RolesRepository rolesRepository;
+    private AuthMapper authMapper;
+
 
     /// CREATE USER REGISTRATION
     @Override
-    public AppResponse<UserDTO> userRegistration(UserCreatedDTO userCreatedDTO) {
+    public String userRegistration(UserCreatedDTO userCreatedDTO) {
         Optional<UserEntity> optionalUser = userRepository.findByEmail(userCreatedDTO.getEmail());
         if (optionalUser.isPresent()) {
             throw new AppBadException("User exists!");
@@ -47,7 +51,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = authMapper.toEntity(userCreatedDTO);
         userRepository.save(user);
         rolesService.createRole(user.getUserId(), Roles.USER);
-        return authMapper.toDTO(user);
+        return "User successfully registered!";
     }
 
     /// GET USER LOG IN
@@ -61,6 +65,7 @@ public class UserServiceImpl implements UserService {
         if (!bCryptPasswordEncoder.matches(loginCreatedDTO.getPassword(), user.getPassword())) {
             return new AppResponse<>("Wrong password!");
         }
+
         LoginResponseDTO dto = new LoginResponseDTO();
         dto.setUserId(user.getUserId());
         dto.setLastName(user.getLastName());
@@ -71,22 +76,27 @@ public class UserServiceImpl implements UserService {
         Roles roles = rolesRepository.findByRoles(user.getUserId());
         dto.setRoles(roles);
         dto.setJwtToken(JwtTokens.encode(user.getEmail(), user.getUserId(), roles));
-        //dto.setRefreshToken(refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken());
-        return new AppResponse<>();
+        dto.setRefreshToken(refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken());
+        return new AppResponse<>(dto, "success", new Date());
     }
 
     /// UPDATE USER DETAILS
     @Override
-    public AppResponse<UserDTO> update(Integer userId, UserCreatedDTO userCreatedDTO) {
-        userRepository.findById(userId).orElseThrow(() -> new AppBadException("User is not found!"));
-        UserEntity userEntity = authMapper.toEntity(userCreatedDTO);
-        userRepository.save(userEntity);
-        return authMapper.toDTO(userEntity);
+    public UserDTO update(Integer userId, UserCreatedDTO userCreatedDTO) {
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new AppBadException("User is not found!");
+        }
+        UserEntity user = authMapper.toUpdateEntity(userId, userCreatedDTO);
+        userRepository.save(user);
+        return authMapper.toDTO(user);
     }
 
     /// DELETE USER LOG OUT
     @Override
-    public void logout(Integer userId, String refreshToken) {
+    public String logout(Integer userId, String refreshToken) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User is not found!"));
+        refreshTokenService.deleteRefreshToken(userEntity.getUserId(), refreshToken);
+        return "Deleted!";
     }
 }

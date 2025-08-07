@@ -1,8 +1,8 @@
 package Anor.market.infrastucture.config.validation;
 
 import Anor.market.domain.model.entity.auth.UserEntity;
-import Anor.market.domain.repository.RolesRepository;
-import Anor.market.domain.repository.UserRepository;
+import Anor.market.domain.repository.auth.RolesRepository;
+import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.shared.enums.Roles;
 import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;

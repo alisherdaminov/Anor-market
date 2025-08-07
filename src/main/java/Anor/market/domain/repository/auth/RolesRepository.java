@@ -1,4 +1,4 @@
-package Anor.market.domain.repository;
+package Anor.market.domain.repository.auth;
 
 import Anor.market.domain.model.entity.auth.RolesEntity;
 import Anor.market.shared.enums.Roles;
@@ -11,4 +11,5 @@ public interface RolesRepository extends JpaRepository<RolesEntity, String> {
 
     @Query("SELECT r.rolesEnum FROM RolesEntity r WHERE r.rolesUserId = ?1")
     Roles findByRoles(Integer userId);
+
 }

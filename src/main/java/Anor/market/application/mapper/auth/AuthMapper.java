@@ -3,14 +3,60 @@ package Anor.market.application.mapper.auth;
 import Anor.market.application.dto.auth.create.UserCreatedDTO;
 import Anor.market.application.dto.auth.dto.UserDTO;
 import Anor.market.domain.model.entity.auth.UserEntity;
-import Anor.market.presentation.response.AppResponse;
-import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface AuthMapper {
+import java.time.LocalDateTime;
 
-    AppResponse<UserDTO> toDTO(UserEntity userEntity);
+@Component
+public class AuthMapper {
 
-    UserEntity toEntity(UserCreatedDTO userCreatedDTO);
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /// DTO TO ENTITY
+    public UserEntity toEntity(UserCreatedDTO userCreatedDTO) {
+        return UserEntity.builder()
+                .lastName(userCreatedDTO.getLastName())
+                .firstName(userCreatedDTO.getFirstName())
+                .email(userCreatedDTO.getEmail())
+                .password(bCryptPasswordEncoder.encode(userCreatedDTO.getPassword()))
+                .phoneNumber(userCreatedDTO.getPhoneNumber())
+                .isGender(userCreatedDTO.isGender())
+                .isSeller(userCreatedDTO.isSeller())
+                .localDateTime(LocalDateTime.now())
+                .build();
+    }
+
+    /// DTO TO UPDATE ENTITY
+    public UserEntity toUpdateEntity(Integer userId, UserCreatedDTO userCreatedDTO) {
+        return UserEntity.builder()
+                .userId(userId)
+                .lastName(userCreatedDTO.getLastName())
+                .firstName(userCreatedDTO.getFirstName())
+                .email(userCreatedDTO.getEmail())
+                .password(bCryptPasswordEncoder.encode(userCreatedDTO.getPassword()))
+                .phoneNumber(userCreatedDTO.getPhoneNumber())
+                .isGender(userCreatedDTO.isGender())
+                .isSeller(userCreatedDTO.isSeller())
+                .localDateTime(LocalDateTime.now())
+                .build();
+    }
+
+    /// ENTITY TO DTO
+    public UserDTO toDTO(UserEntity user) {
+        return UserDTO.builder()
+                .userId(user.getUserId())
+                .lastName(user.getLastName())
+                .firstName(user.getFirstName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .isGender(user.isGender())
+                .isSeller(user.isSeller())
+                .createdAt(user.getLocalDateTime())
+                .build();
+    }
+
 
 }

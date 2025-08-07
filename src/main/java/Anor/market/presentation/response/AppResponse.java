@@ -7,9 +7,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Data
-@NoArgsConstructor
-@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AppResponse<T> {
     private T data;

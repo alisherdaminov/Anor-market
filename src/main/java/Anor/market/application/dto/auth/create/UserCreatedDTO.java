@@ -1,10 +1,12 @@
 package Anor.market.application.dto.auth.create;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserCreatedDTO {
 
     private String lastName;

@@ -4,11 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -32,6 +36,9 @@ public class UserEntity {
     private LocalDateTime localDateTime = LocalDateTime.now();
 
 
-    @OneToOne(mappedBy = "userEntityRoles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userEntityRoles")
     private RolesEntity rolesEntityUser;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<RefreshTokenEntity> refreshToken;
 }

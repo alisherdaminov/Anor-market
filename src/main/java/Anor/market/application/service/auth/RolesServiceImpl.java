@@ -1,8 +1,8 @@
-package Anor.market.application.service;
+package Anor.market.application.service.auth;
 
 import Anor.market.domain.model.entity.auth.RolesEntity;
-import Anor.market.domain.repository.RolesRepository;
-import Anor.market.domain.service.RolesService;
+import Anor.market.domain.repository.auth.RolesRepository;
+import Anor.market.domain.service.auth.RolesService;
 import Anor.market.shared.enums.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
