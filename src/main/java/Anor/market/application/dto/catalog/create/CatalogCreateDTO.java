@@ -13,7 +13,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CatalogCreateDTO {
 
-    private String catalogId;
     private String catalogName;
     private List<CategoryCreateDTO> categoryCreateList;
 }

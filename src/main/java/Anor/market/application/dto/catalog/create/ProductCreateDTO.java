@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductCreateDTO {
 
-    private String productId;
     private String sellerName;
     private String deliveryTitle;
     private String productDescription;
@@ -21,5 +20,5 @@ public class ProductCreateDTO {
     private String price;
     private int discountWithCard;
     private int discountWithoutCard;
-    private LocalDate deliveryDate;
+    private String deliveryDate;
 }

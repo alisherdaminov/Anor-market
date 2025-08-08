@@ -6,6 +6,7 @@ import Anor.market.application.dto.catalog.create.CategoryItemListCreateDTO;
 import Anor.market.domain.model.entity.catalog.CatalogEntity;
 import Anor.market.domain.model.entity.catalog.CategoryEntity;
 import Anor.market.domain.model.entity.catalog.CategoryItemListEntity;
+import Anor.market.domain.model.entity.catalog.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,29 +20,34 @@ public class CatalogUpdateMapper {
 
 
     /// DTO TO ENTITY UPDATE
-    public CatalogEntity toUpdateCatalogEntity(String catalogId, CatalogCreateDTO createDTO) {
+    public CatalogEntity toUpdateCatalogEntity(String catalogId, String productId, CatalogCreateDTO createDTO) {
         return CatalogEntity.builder()
                 .catalogId(catalogId)
                 .catalogName(createDTO.getCatalogName())
-                .categoryEntityList(createDTO.getCategoryCreateList().stream().map(this::toUpdateCategoryEntity).collect(Collectors.toList()))
+                .categoryEntityList(createDTO.getCategoryCreateList().stream().map(categoryCreateDTO ->
+                        this.toUpdateCategoryEntity(productId, categoryCreateDTO)
+                ).collect(Collectors.toList()))
                 .localDateTime(LocalDateTime.now())
                 .build();
     }
 
     /// DTO TO ENTITY UPDATE
-    public CategoryEntity toUpdateCategoryEntity(CategoryCreateDTO createDTO) {
+    public CategoryEntity toUpdateCategoryEntity(String productId, CategoryCreateDTO createDTO) {
         return CategoryEntity.builder()
                 .categoryName(createDTO.getCategoryName())
-                .categoryItemListEntityList(createDTO.getCategoryItemListCreateList().stream().map(this::toUpdateCategoryItemListEntity).collect(Collectors.toList()))
+                .categoryItemListEntityList(createDTO.getCategoryItemListCreateList().stream().map(createDTO1 ->
+                        this.toUpdateCategoryItemListEntity(productId, createDTO1)
+                ).collect(Collectors.toList()))
                 .localDateTime(LocalDateTime.now())
                 .build();
     }
 
     /// DTO TO ENTITY UPDATE
-    public CategoryItemListEntity toUpdateCategoryItemListEntity(CategoryItemListCreateDTO createDTO) {
+    public CategoryItemListEntity toUpdateCategoryItemListEntity(String productId, CategoryItemListCreateDTO createDTO) {
         return CategoryItemListEntity.builder()
                 .categoryItemListName(createDTO.getCategoryItemListName())
-                .productEntityList(createDTO.getProductList().stream().map(mapper::toProductEntity).collect(Collectors.toList()))
+                .productEntityList(createDTO.getProductList().stream().map(productCreateDTO ->
+                        mapper.toUpdateProductEntity(productId, productCreateDTO)).collect(Collectors.toList()))
                 .localDateTime(LocalDateTime.now())
                 .build();
     }
