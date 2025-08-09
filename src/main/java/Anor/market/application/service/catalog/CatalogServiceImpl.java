@@ -111,17 +111,21 @@ public class CatalogServiceImpl implements CatalogService {
         CatalogEntity catalog = catalogRepository.findById(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
         /// PRODUCT ENTITY DATABASE SEARCH BY ID
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+
         /// CATALOG ENTITY
         CatalogEntity catalogEntity = catalogUpdateMapper.toUpdateCatalogEntity(catalog.getCatalogId(), product.getProductId(), createDTO);
         catalogEntity.setCreatedAt(LocalDateTime.now());
+
         ///  CATEGORY ENTITY LIST
         List<CategoryEntity> categoryEntityList = createDTO.getCategoryCreateList().stream().map(categoryCreateDTO -> {
             CategoryEntity category = catalogUpdateMapper.toUpdateCategoryEntity(product.getProductId(), categoryCreateDTO);
             category.setCatalogEntity(catalogEntity);// ---- PARENT LINK
+
             /// CATEGORYITEMLIST ENTITY LIST
             List<CategoryItemListEntity> categoryItemListEntityList = categoryCreateDTO.getCategoryItemListCreateList().stream().map(itemListCreateDTO -> {
                 CategoryItemListEntity itemEntity = catalogUpdateMapper.toUpdateCategoryItemListEntity(product.getProductId(), itemListCreateDTO);
                 itemEntity.setCategoryEntity(category);// ---- PARENT LINK
+
                 /// PRODUCT ENTITY LIST
                 List<ProductEntity> productEntityList = itemListCreateDTO.getProductList().stream().map(productCreateDTO -> {
                     ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), productCreateDTO);
@@ -130,19 +134,23 @@ public class CatalogServiceImpl implements CatalogService {
                     productRepository.save(productEntity);
                     return productEntity;
                 }).collect(Collectors.toList());
+
                 itemEntity.setProductEntityList(productEntityList);
                 /// save categoryItemList
                 categoryItemListRepository.save(itemEntity);
                 return itemEntity;
             }).collect(Collectors.toList());
+
             category.setCategoryItemListEntityList(categoryItemListEntityList);
             /// save category
             categoryRepository.save(category);
             return category;
         }).collect(Collectors.toList());
+
         catalogEntity.setCategoryEntityList(categoryEntityList);
         /// save catalog
         catalogRepository.save(catalogEntity);
+
         /// to dto
         return catalogMapper.toCatalogDTO(catalogEntity);
     }
@@ -154,18 +162,21 @@ public class CatalogServiceImpl implements CatalogService {
         return "Deleted!";
     }
 
+    ///  DELETE THE CATEGORY BY USING CATEGORY ID
     @Override
     public String deleteCategory(String categoryId) {
         categoryRepository.deleteById(categoryId);
         return "Deleted!";
     }
 
+    ///  DELETE THE CATEGORY ITEM LIST BY USING CATEGORY ITEM LIST ID
     @Override
     public String deleteCategoryItemList(String categoryItemListId) {
         categoryItemListRepository.deleteById(categoryItemListId);
         return "Deleted!";
     }
 
+    ///  DELETE THE PRODUCT BY USING PRODUCT ID
     @Override
     public String deleteProduct(String productId) {
         productRepository.deleteById(productId);
