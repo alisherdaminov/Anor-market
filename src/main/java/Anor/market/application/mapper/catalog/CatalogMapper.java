@@ -26,7 +26,7 @@ public class CatalogMapper {
         return CatalogEntity.builder()
                 .catalogName(createDTO.getCatalogName())
                 .categoryEntityList(createDTO.getCategoryCreateList().stream().map(this::toCategoryEntity).collect(Collectors.toList()))
-                .localDateTime(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class CatalogMapper {
                 .catalogId(catalogEntity.getCatalogId())
                 .catalogName(catalogEntity.getCatalogName())
                 .categoryList(catalogEntity.getCategoryEntityList().stream().map(this::toCategoryDTO).collect(Collectors.toList()))
-                .localDateTime(catalogEntity.getLocalDateTime())
+                .localDateTime(catalogEntity.getCreatedAt())
                 .build();
     }
 

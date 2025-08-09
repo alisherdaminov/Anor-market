@@ -3,6 +3,7 @@ package Anor.market.application.service.catalog;
 import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.dto.CatalogDTO;
 import Anor.market.application.mapper.catalog.CatalogMapper;
+import Anor.market.application.mapper.catalog.CatalogUpdateMapper;
 import Anor.market.application.mapper.catalog.ProductMapper;
 import Anor.market.domain.model.entity.catalog.CatalogEntity;
 import Anor.market.domain.model.entity.catalog.CategoryEntity;
@@ -13,15 +14,22 @@ import Anor.market.domain.repository.catalog.CategoryItemListRepository;
 import Anor.market.domain.repository.catalog.CategoryRepository;
 import Anor.market.domain.repository.catalog.ProductRepository;
 import Anor.market.domain.service.catalog.CatalogService;
+import Anor.market.infrastucture.config.validation.SpringSecurityValid;
+import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * CatalogServiceImpl implements CatalogService which has four override methods these are for creating, getting,
  * updating, deleting that catalog, category, category item list implementing by ADMIN
+ * And also catalog, category, category item list and product list can be deleted by ADMIN
  */
 @Service
 public class CatalogServiceImpl implements CatalogService {
@@ -38,6 +46,8 @@ public class CatalogServiceImpl implements CatalogService {
     private CatalogMapper catalogMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CatalogUpdateMapper catalogUpdateMapper;
 
 
     /// CREATE A CATALOG
@@ -84,22 +94,81 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogMapper.toCatalogDTO(catalogEntity);
     }
 
-
     /// GET ALL THE CATALOG LIST
     @Override
-    public List<CatalogDTO> getAll() {
-        return List.of();
+    public PageImpl<CatalogDTO> getAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Integer userId = SpringSecurityValid.getCurrentUser();
+        Page<CatalogEntity> catalogEntityList = catalogRepository.findAllByUserIdAndOrderByCreatedAtDesc(userId, pageRequest);
+        List<CatalogDTO> catalogDTOList = catalogEntityList.getContent().stream().map(catalogMapper::toCatalogDTO).collect(Collectors.toList());
+        return new PageImpl<>(catalogDTOList, pageRequest, catalogEntityList.getTotalElements());
     }
 
     /// UPDATE ALL THE CATALOG LIST BY CATALOG ID
     @Override
-    public CatalogDTO updateCatalog(String catalogId, CatalogCreateDTO createDTO) {
-        return null;
+    public CatalogDTO updateCatalog(String catalogId, String productId, CatalogCreateDTO createDTO) {
+        /// CATALOG ENTITY DATABASE SEARCH BY ID
+        CatalogEntity catalog = catalogRepository.findById(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
+        /// PRODUCT ENTITY DATABASE SEARCH BY ID
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        /// CATALOG ENTITY
+        CatalogEntity catalogEntity = catalogUpdateMapper.toUpdateCatalogEntity(catalog.getCatalogId(), product.getProductId(), createDTO);
+        catalogEntity.setCreatedAt(LocalDateTime.now());
+        ///  CATEGORY ENTITY LIST
+        List<CategoryEntity> categoryEntityList = createDTO.getCategoryCreateList().stream().map(categoryCreateDTO -> {
+            CategoryEntity category = catalogUpdateMapper.toUpdateCategoryEntity(product.getProductId(), categoryCreateDTO);
+            category.setCatalogEntity(catalogEntity);// ---- PARENT LINK
+            /// CATEGORYITEMLIST ENTITY LIST
+            List<CategoryItemListEntity> categoryItemListEntityList = categoryCreateDTO.getCategoryItemListCreateList().stream().map(itemListCreateDTO -> {
+                CategoryItemListEntity itemEntity = catalogUpdateMapper.toUpdateCategoryItemListEntity(product.getProductId(), itemListCreateDTO);
+                itemEntity.setCategoryEntity(category);// ---- PARENT LINK
+                /// PRODUCT ENTITY LIST
+                List<ProductEntity> productEntityList = itemListCreateDTO.getProductList().stream().map(productCreateDTO -> {
+                    ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), productCreateDTO);
+                    productEntity.setCategoryItemListEntity(itemEntity);// ---- PARENT LINK
+                    /// save products
+                    productRepository.save(productEntity);
+                    return productEntity;
+                }).collect(Collectors.toList());
+                itemEntity.setProductEntityList(productEntityList);
+                /// save categoryItemList
+                categoryItemListRepository.save(itemEntity);
+                return itemEntity;
+            }).collect(Collectors.toList());
+            category.setCategoryItemListEntityList(categoryItemListEntityList);
+            /// save category
+            categoryRepository.save(category);
+            return category;
+        }).collect(Collectors.toList());
+        catalogEntity.setCategoryEntityList(categoryEntityList);
+        /// save catalog
+        catalogRepository.save(catalogEntity);
+        /// to dto
+        return catalogMapper.toCatalogDTO(catalogEntity);
     }
 
     ///  DELETE THE CATALOG BY USING CATALOG ID
     @Override
     public String deleteCatalog(String catalogId) {
-        return "";
+        catalogRepository.deleteById(catalogId);
+        return "Deleted!";
+    }
+
+    @Override
+    public String deleteCategory(String categoryId) {
+        categoryRepository.deleteById(categoryId);
+        return "Deleted!";
+    }
+
+    @Override
+    public String deleteCategoryItemList(String categoryItemListId) {
+        categoryItemListRepository.deleteById(categoryItemListId);
+        return "Deleted!";
+    }
+
+    @Override
+    public String deleteProduct(String productId) {
+        productRepository.deleteById(productId);
+        return "Deleted!";
     }
 }

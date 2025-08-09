@@ -3,7 +3,6 @@ package Anor.market.application.mapper.catalog;
 import Anor.market.application.dto.catalog.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.dto.ProductDTO;
 import Anor.market.domain.model.entity.catalog.ProductEntity;
-import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -47,8 +46,8 @@ public class ProductMapper {
         int productPrice = Integer.parseInt(createDTO.getPrice());
         int discountWithCard = createDTO.getDiscountWithCard();
         int discountWithoutCard = createDTO.getDiscountWithoutCard();
-        int resultsOfDiscountWithCard = 1;
-        int resultsOfDiscountWithoutCard = 1;
+        int resultsOfDiscountWithCard = 0;
+        int resultsOfDiscountWithoutCard = 0;
         if (productPrice > 0) {
             resultsOfDiscountWithCard = productPrice % discountWithCard;
             resultsOfDiscountWithoutCard = productPrice % discountWithoutCard;

@@ -21,7 +21,7 @@ public class CatalogEntity {
     @Column(name = "catalog_name")
     private String catalogName;
     @Column(name = "local_date_time")
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "catalogEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CategoryEntity> categoryEntityList;

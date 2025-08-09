@@ -2,16 +2,21 @@ package Anor.market.domain.service.catalog;
 
 import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.dto.CatalogDTO;
-
-import java.util.List;
+import org.springframework.data.domain.PageImpl;
 
 public interface CatalogService {
 
     CatalogDTO createCatalog(CatalogCreateDTO createDTO);
 
-    List<CatalogDTO> getAll();
+    PageImpl<CatalogDTO> getAll(int page, int size);
 
-    CatalogDTO updateCatalog(String catalogId, CatalogCreateDTO createDTO);
+    CatalogDTO updateCatalog(String catalogId, String productId, CatalogCreateDTO createDTO);
 
     String deleteCatalog(String catalogId);
+
+    String deleteCategory(String categoryId);
+
+    String deleteCategoryItemList(String categoryItemListId);
+
+    String deleteProduct(String productId);
 }
