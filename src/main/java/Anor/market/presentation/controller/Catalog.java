@@ -2,6 +2,9 @@ package Anor.market.presentation.controller;
 
 import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.dto.CatalogDTO;
+import Anor.market.application.dto.catalog.dto.CategoryDTO;
+import Anor.market.application.dto.catalog.dto.CategoryItemListDTO;
+import Anor.market.application.dto.catalog.dto.ProductDTO;
 import Anor.market.application.service.catalog.CatalogServiceImpl;
 import Anor.market.presentation.response.AppResponse;
 import Anor.market.shared.util.PageUtil;
@@ -34,8 +37,32 @@ public class Catalog {
     @GetMapping("/list")
     public ResponseEntity<AppResponse<PageImpl<CatalogDTO>>> getAll(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "22") int size) {
+            @RequestParam(value = "size", defaultValue = "20") int size) {
         return ResponseEntity.ok().body(new AppResponse<>(service.getAll(PageUtil.page(page), size), "success", new Date()));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<AppResponse<CategoryDTO>> getCategoryById(
+            @Valid
+            @PathVariable("categoryId") String categoryId) {
+        return ResponseEntity.ok().body(new AppResponse<>(service.getCategoryById(categoryId), "success", new Date()));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/category-item-list/{categoryItemListId}")
+    public ResponseEntity<AppResponse<CategoryItemListDTO>> getCategoryItemListById(
+            @Valid
+            @PathVariable("categoryItemListId") String categoryItemListId) {
+        return ResponseEntity.ok().body(new AppResponse<>(service.getCategoryItemListById(categoryItemListId), "success", new Date()));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<AppResponse<ProductDTO>> getProductById(
+            @Valid
+            @PathVariable("productId") String productId) {
+        return ResponseEntity.ok().body(new AppResponse<>(service.getProductById(productId), "success", new Date()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

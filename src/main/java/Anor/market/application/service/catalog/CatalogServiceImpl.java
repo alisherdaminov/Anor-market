@@ -2,6 +2,9 @@ package Anor.market.application.service.catalog;
 
 import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.dto.CatalogDTO;
+import Anor.market.application.dto.catalog.dto.CategoryDTO;
+import Anor.market.application.dto.catalog.dto.CategoryItemListDTO;
+import Anor.market.application.dto.catalog.dto.ProductDTO;
 import Anor.market.application.mapper.catalog.CatalogMapper;
 import Anor.market.application.mapper.catalog.CatalogUpdateMapper;
 import Anor.market.application.mapper.catalog.ProductMapper;
@@ -98,15 +101,36 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public PageImpl<CatalogDTO> getAll(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Integer userId = SpringSecurityValid.getCurrentUser();
-        Page<CatalogEntity> catalogEntityList = catalogRepository.findAllByUserIdAndOrderByCreatedAtDesc(userId, pageRequest);
+        Page<CatalogEntity> catalogEntityList = catalogRepository.findByOrderByCreatedAtDesc(pageRequest);
         List<CatalogDTO> catalogDTOList = catalogEntityList.getContent().stream().map(catalogMapper::toCatalogDTO).collect(Collectors.toList());
         return new PageImpl<>(catalogDTOList, pageRequest, catalogEntityList.getTotalElements());
+    }
+
+    /// GET CATEGORY BY ID
+    @Override
+    public CategoryDTO getCategoryById(String categoryId) {
+        CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new AppBadException("Category id is not found!"));
+        return catalogMapper.toCategoryDTO(category);
+    }
+
+    /// GET CATEGORY ITEM LIST BY ID
+    @Override
+    public CategoryItemListDTO getCategoryItemListById(String categoryItemListId) {
+        CategoryItemListEntity categoryItemList = categoryItemListRepository.findById(categoryItemListId).orElseThrow(() -> new AppBadException("Category item list id is not found!"));
+        return catalogMapper.toCategoryItemListDTO(categoryItemList);
+    }
+
+    /// GET PRODUCT BY ID
+    @Override
+    public ProductDTO getProductById(String productId) {
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        return productMapper.toProductDTO(product);
     }
 
     /// UPDATE ALL THE CATALOG LIST BY CATALOG ID
     @Override
     public CatalogDTO updateCatalog(String catalogId, String productId, CatalogCreateDTO createDTO) {
+
         /// CATALOG ENTITY DATABASE SEARCH BY ID
         CatalogEntity catalog = catalogRepository.findById(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
         /// PRODUCT ENTITY DATABASE SEARCH BY ID

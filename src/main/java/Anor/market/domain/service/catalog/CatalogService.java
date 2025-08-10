@@ -2,6 +2,9 @@ package Anor.market.domain.service.catalog;
 
 import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.dto.CatalogDTO;
+import Anor.market.application.dto.catalog.dto.CategoryDTO;
+import Anor.market.application.dto.catalog.dto.CategoryItemListDTO;
+import Anor.market.application.dto.catalog.dto.ProductDTO;
 import org.springframework.data.domain.PageImpl;
 
 public interface CatalogService {
@@ -9,6 +12,12 @@ public interface CatalogService {
     CatalogDTO createCatalog(CatalogCreateDTO createDTO);
 
     PageImpl<CatalogDTO> getAll(int page, int size);
+
+    CategoryDTO getCategoryById(String categoryId);
+
+    CategoryItemListDTO getCategoryItemListById(String categoryItemListId);
+
+    ProductDTO getProductById(String productId);
 
     CatalogDTO updateCatalog(String catalogId, String productId, CatalogCreateDTO createDTO);
 

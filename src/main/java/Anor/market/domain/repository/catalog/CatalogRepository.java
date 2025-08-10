@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CatalogRepository extends JpaRepository<CatalogEntity, String> {
 
-    Page<CatalogEntity> findAllByUserIdAndOrderByCreatedAtDesc(Integer userId, Pageable pageable);
+    Page<CatalogEntity> findByOrderByCreatedAtDesc(Pageable pageable);
 }

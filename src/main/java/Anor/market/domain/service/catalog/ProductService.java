@@ -2,14 +2,13 @@ package Anor.market.domain.service.catalog;
 
 import Anor.market.application.dto.catalog.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.dto.ProductDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ProductService {
 
-    ProductDTO createProduct(ProductCreateDTO createDTO);
+    ProductDTO createProduct(String categoryItemListId, ProductCreateDTO createDTO);
 
-    List<ProductDTO> getAll();
+    Page<ProductDTO> getAll(int page, int size);
 
     ProductDTO updateProduct(String productId, ProductCreateDTO createDTO);
 
