@@ -1,8 +1,8 @@
 package Anor.market.presentation.controller;
 
-import Anor.market.application.dto.catalog.create.ProductCreateDTO;
-import Anor.market.application.dto.catalog.dto.ProductDTO;
-import Anor.market.application.service.catalog.ProductServiceImpl;
+import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.service.catalog.product.ProductServiceImpl;
 import Anor.market.presentation.response.AppResponse;
 import Anor.market.shared.util.PageUtil;
 import jakarta.validation.Valid;

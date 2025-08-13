@@ -10,7 +10,6 @@ import Anor.market.presentation.request.LoginCreatedDTO;
 import Anor.market.presentation.request.LogoutRequest;
 import Anor.market.presentation.request.RefreshTokenRequest;
 import Anor.market.presentation.response.AppResponse;
-import Anor.market.presentation.response.LoginResponseDTO;
 import Anor.market.shared.exceptions.AppBadException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class Auth {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AppResponse<LoginResponseDTO>> login(@Valid @RequestBody LoginCreatedDTO loginCreatedDTO) {
+    public ResponseEntity<AppResponse<UserDTO>> login(@Valid @RequestBody LoginCreatedDTO loginCreatedDTO) {
         return ResponseEntity.ok().body(authService.login(loginCreatedDTO));
     }
 

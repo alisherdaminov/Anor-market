@@ -7,10 +7,8 @@ import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.domain.repository.auth.RolesRepository;
 import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.domain.service.auth.AuthService;
-import Anor.market.infrastucture.config.validation.JwtTokens;
 import Anor.market.presentation.request.LoginCreatedDTO;
 import Anor.market.presentation.response.AppResponse;
-import Anor.market.presentation.response.LoginResponseDTO;
 import Anor.market.shared.enums.Roles;
 import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RolesRepository rolesRepository;
     @Autowired
     private RolesServiceImpl rolesService;
     @Autowired
@@ -56,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
     /// GET USER LOG IN
     @Override
-    public AppResponse<LoginResponseDTO> login(LoginCreatedDTO loginCreatedDTO) {
+    public AppResponse<UserDTO> login(LoginCreatedDTO loginCreatedDTO) {
         Optional<UserEntity> optionalUser = userRepository.findByEmail(loginCreatedDTO.getEmail());
         if (optionalUser.isEmpty()) {
             throw new AppBadException("User is not found!");
@@ -65,19 +61,8 @@ public class AuthServiceImpl implements AuthService {
         if (!bCryptPasswordEncoder.matches(loginCreatedDTO.getPassword(), user.getPassword())) {
             return new AppResponse<>("Wrong password!");
         }
-
-        LoginResponseDTO dto = new LoginResponseDTO();
-        dto.setUserId(user.getUserId());
-        dto.setLastName(user.getLastName());
-        dto.setFirstName(user.getFirstName());
-        dto.setPhoneNumber(user.getPhoneNumber());
-        dto.setGender(user.isGender());
-        dto.setSeller(user.isSeller());
-        Roles roles = rolesRepository.findByRoles(user.getUserId());
-        dto.setRoles(roles);
-        dto.setJwtToken(JwtTokens.encode(user.getEmail(), user.getUserId(), roles));
-        dto.setRefreshToken(refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken());
-        return new AppResponse<>(dto, "success", new Date());
+        UserDTO userDTO = authMapper.toDTO(user);
+        return new AppResponse<>(userDTO, "success", new Date());
     }
 
     /// UPDATE USER DETAILS

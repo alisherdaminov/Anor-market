@@ -1,22 +1,22 @@
 package Anor.market.presentation.controller;
 
-import Anor.market.application.dto.catalog.create.CatalogCreateDTO;
-import Anor.market.application.dto.catalog.dto.CatalogDTO;
-import Anor.market.application.dto.catalog.dto.CategoryDTO;
-import Anor.market.application.dto.catalog.dto.CategoryItemListDTO;
-import Anor.market.application.dto.catalog.dto.ProductDTO;
-import Anor.market.application.service.catalog.CatalogServiceImpl;
+import Anor.market.application.dto.catalog.catalog.create.CatalogCreateDTO;
+import Anor.market.application.dto.catalog.catalog.dto.CatalogDTO;
+import Anor.market.application.dto.catalog.catalog.dto.CategoryDTO;
+import Anor.market.application.dto.catalog.catalog.dto.CategoryItemListDTO;
+import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.service.catalog.catalog.CatalogServiceImpl;
 import Anor.market.presentation.response.AppResponse;
+import Anor.market.presentation.response.PageResponse;
 import Anor.market.shared.util.PageUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/catalog")
@@ -35,10 +35,12 @@ public class Catalog {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
-    public ResponseEntity<AppResponse<PageImpl<CatalogDTO>>> getAll(
+    public ResponseEntity<AppResponse<PageResponse<CatalogDTO>>> getAll(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size) {
-        return ResponseEntity.ok().body(new AppResponse<>(service.getAll(PageUtil.page(page), size), "success", new Date()));
+        Page<CatalogDTO> catalogPage = service.getAll(PageUtil.page(page), size);
+        PageResponse<CatalogDTO> pageResponse = new PageResponse<>(catalogPage);
+        return ResponseEntity.ok(new AppResponse<>(pageResponse, "success", new Date()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
