@@ -143,6 +143,13 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public CatalogDTO updateCatalog(String catalogId, String productId, CatalogCreateDTO createDTO) {
 
+        Integer userId = SpringSecurityValid.getCurrentUser();
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User id is not found!"));
+        boolean isSeller = userEntity.isSeller();
+        if (!isSeller && SpringSecurityValid.hasRole(Roles.USER)) {
+            throw new AppBadException("You are not a seller!");
+        }
+
         /// CATALOG ENTITY DATABASE SEARCH BY ID
         CatalogEntity catalog = catalogRepository.findById(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
         /// PRODUCT ENTITY DATABASE SEARCH BY ID
