@@ -6,7 +6,6 @@ import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,6 +23,8 @@ public class ProductEntity {
     private String productId;
     @Column(name = "seller_name")
     private String sellerName;
+    @Column(name = "product_name")
+    private String productName;
     @Column(name = "delivery_title")
     private String deliveryTitle;
     @Column(name = "product_description")
@@ -31,15 +32,15 @@ public class ProductEntity {
     @Column(name = "product_color")
     private String productColor;
     @Column(name = "price")
-    private BigDecimal price;
+    private int price;
     @Column(name = "discount_with_card_percent")
-    private BigDecimal discountWithCardPercent;
-    @Column(name = "discount_with_card")
-    private BigDecimal discountWithCard;
+    private int discountWithCardPercent;
+    @Column(name = "discount__price_with_card")
+    private int discountPriceWithCard;
     @Column(name = "discount_without_card_percent")
-    private BigDecimal discountWithoutCardPercent;
-    @Column(name = "discount_without_card")
-    private BigDecimal discountWithoutCard;
+    private int discountWithoutCardPercent;
+    @Column(name = "discount_price_without_card")
+    private int discountPriceWithoutCard;
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
     @Column(name = "local_date_time")
@@ -51,8 +52,7 @@ public class ProductEntity {
     private CategoryItemListEntity categoryItemListEntity;
 
     //Carts
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_products_id")
+    @OneToOne(mappedBy = "productEntityCart", fetch = FetchType.LAZY)
     private CartEntity cartEntity;
 
     //Favorite

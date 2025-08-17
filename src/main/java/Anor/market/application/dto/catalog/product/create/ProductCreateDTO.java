@@ -15,16 +15,12 @@ import java.math.BigDecimal;
 public class ProductCreateDTO {
 
     private String sellerName;
+    private String productName;
     private String deliveryTitle;
     private String productDescription;
     private String productColor;
-    private BigDecimal price;
-    private BigDecimal discountWithCardPercent;
-    private BigDecimal discountWithCard;
-    private BigDecimal discountWithoutCardPercent;
-    private BigDecimal discountWithoutCard;
-    private boolean isLiked;
-    private boolean isCart;
-    private int quantityOfProduct;
+    private int price;
+    private int discountWithCardPercent;
+    private int discountWithoutCardPercent;
     private String deliveryDate;
 }

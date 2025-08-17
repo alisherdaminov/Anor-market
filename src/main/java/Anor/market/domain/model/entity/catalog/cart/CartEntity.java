@@ -25,8 +25,12 @@ public class CartEntity {
     private LocalDateTime localDateTime = LocalDateTime.now();
 
     //Products
-    @OneToMany(mappedBy = "cartEntity", fetch = FetchType.LAZY)
-    private List<ProductEntity> productEntityList;
+    @Column(name = "products_cart_id")
+    private String productId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "products_cart_id", insertable = false, updatable = false)
+    private ProductEntity productEntityCart;
 
 
 }

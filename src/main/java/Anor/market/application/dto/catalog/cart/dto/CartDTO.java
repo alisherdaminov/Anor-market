@@ -1,8 +1,11 @@
 package Anor.market.application.dto.catalog.cart.dto;
 
+import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +16,7 @@ import java.time.LocalDateTime;
 public class CartDTO {
 
     private String cartId;
-    private String productId;
+    private ProductDTO product;
     private int quantityOfProduct;
     private LocalDateTime localDateTime;
 }

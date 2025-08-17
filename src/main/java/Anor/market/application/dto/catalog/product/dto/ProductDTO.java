@@ -17,14 +17,15 @@ public class ProductDTO {
 
     private String productId;
     private String sellerName;
+    private String productName;
     private String deliveryTitle;
     private String productDescription;
     private String productColor;
-    private BigDecimal price;
-    private BigDecimal discountWithCardPercent;
-    private BigDecimal discountWithCard;
-    private BigDecimal discountWithoutCardPercent;
-    private BigDecimal discountWithoutCard;
+    private int price;
+    private int discountWithCardPercent;
+    private int discountPriceWithCard;
+    private int discountWithoutCardPercent;
+    private int discountPriceWithoutCard;
     private LocalDate deliveryDate;
     private LocalDateTime localDateTime;
 }

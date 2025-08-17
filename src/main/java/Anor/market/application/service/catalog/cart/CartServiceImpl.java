@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
     /// GET ALL DATA OF THE PRODUCTIONS
     @Override
     public List<CartDTO> getAllCarts() {
-        return cartRepository.findAll()
+        return cartRepository.findAllCarts()
                 .stream().map(cartMapper::toDTO)
                 .sorted(Comparator.comparing(CartDTO::getLocalDateTime))
                 .toList();
@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
     /// DELETE BY CART ID
     @Override
     public String deleteCart(String cartId) {
-        cartRepository.deleteById(cartId);
+        cartRepository.deleteCartsById(cartId);
         return "Deleted!";
     }
 }

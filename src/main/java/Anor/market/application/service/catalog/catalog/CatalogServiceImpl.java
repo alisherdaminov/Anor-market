@@ -8,15 +8,19 @@ import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import Anor.market.application.mapper.catalog.catalog.CatalogMapper;
 import Anor.market.application.mapper.catalog.catalog.CatalogUpdateMapper;
 import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CatalogEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
 import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.domain.repository.catalog.catalog.CatalogRepository;
 import Anor.market.domain.repository.catalog.catalog.CategoryItemListRepository;
 import Anor.market.domain.repository.catalog.catalog.CategoryRepository;
 import Anor.market.domain.repository.catalog.product.ProductRepository;
 import Anor.market.domain.service.catalog.catalog.CatalogService;
+import Anor.market.infrastucture.config.validation.SpringSecurityValid;
+import Anor.market.shared.enums.Roles;
 import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +50,8 @@ public class CatalogServiceImpl implements CatalogService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private CatalogMapper catalogMapper;
     @Autowired
     private ProductMapper productMapper;
@@ -56,6 +62,13 @@ public class CatalogServiceImpl implements CatalogService {
     /// CREATE A CATALOG
     @Override
     public CatalogDTO createCatalog(CatalogCreateDTO createDTO) {
+        Integer userId = SpringSecurityValid.getCurrentUser();
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User id is not found!"));
+        boolean isSeller = userEntity.isSeller();
+        if (!isSeller && SpringSecurityValid.hasRole(Roles.USER)) {
+            throw new AppBadException("You are not a seller!");
+        }
+
         /// CATALOG ENTITY
         CatalogEntity catalogEntity = catalogMapper.toCatalogEntity(createDTO);
         /// save catalog

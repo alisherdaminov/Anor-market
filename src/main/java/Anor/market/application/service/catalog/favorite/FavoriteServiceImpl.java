@@ -44,7 +44,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     /// DELETE THE FAVORITES BY FAVORITE'S ID
     @Override
     public String deleteFavorite(String favoriteId) {
-        favoriteRepository.deleteById(favoriteId);
+        favoriteRepository.deleteFavoriteById(favoriteId);
         return "Deleted!";
     }
 }

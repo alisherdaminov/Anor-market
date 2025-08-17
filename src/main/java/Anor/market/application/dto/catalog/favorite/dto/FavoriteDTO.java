@@ -1,5 +1,6 @@
 package Anor.market.application.dto.catalog.favorite.dto;
 
+import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -14,6 +15,6 @@ import java.time.LocalDateTime;
 public class FavoriteDTO {
 
     private String favoriteId;
-    private String productId;
+    private ProductDTO productDTO;
     private LocalDateTime localDateTime;
 }

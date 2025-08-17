@@ -1,9 +1,9 @@
 package Anor.market.application.dto.catalog.cart.create;
 
+import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

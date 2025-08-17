@@ -28,14 +28,14 @@ public class Favorites {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<AppResponse<List<FavoriteDTO>>> getAllCarts() {
+    public ResponseEntity<AppResponse<List<FavoriteDTO>>> getAllFavorite() {
         return ResponseEntity.ok().body(new AppResponse<>(service.getAllFavorites(), "success", new Date()));
     }
 
     @DeleteMapping("/{favoriteId}")
-    public ResponseEntity<AppResponse<String>> deleteCart(
+    public ResponseEntity<AppResponse<String>> deleteFavorite(
             @Valid
-            @PathVariable("favoriteId") String cartId) {
-        return ResponseEntity.ok().body(new AppResponse<>(service.deleteFavorite(cartId), "success", new Date()));
+            @PathVariable("favoriteId") String favoriteId) {
+        return ResponseEntity.ok().body(new AppResponse<>(service.deleteFavorite(favoriteId), "success", new Date()));
     }
 }

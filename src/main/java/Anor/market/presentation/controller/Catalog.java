@@ -86,7 +86,7 @@ public class Catalog {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/category/{categoryId}")
     public ResponseEntity<AppResponse<String>> deleteCategory(
             @Valid
             @PathVariable("categoryId") String categoryId) {
@@ -94,7 +94,7 @@ public class Catalog {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{categoryItemListId}")
+    @DeleteMapping("/category-item-list/{categoryItemListId}")
     public ResponseEntity<AppResponse<String>> deleteCategoryItemList(
             @Valid
             @PathVariable("categoryItemListId") String categoryItemListId) {
@@ -102,7 +102,7 @@ public class Catalog {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/product/{productId}")
     public ResponseEntity<AppResponse<String>> deleteProduct(
             @Valid
             @PathVariable("productId") String productId) {

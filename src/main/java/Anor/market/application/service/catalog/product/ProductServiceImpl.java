@@ -70,6 +70,12 @@ public class ProductServiceImpl implements ProductService {
     /// UPDATE PRODUCT BY ID
     @Override
     public ProductDTO updateProduct(String productId, ProductCreateDTO createDTO) {
+        Integer userId = SpringSecurityValid.getCurrentUser();
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User is not found!"));
+        boolean isSeller = user.isSeller();
+        if (!isSeller) {
+            throw new AppBadException("you are not seller!");
+        }
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
         ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), createDTO);
         productRepository.save(productEntity);
