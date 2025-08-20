@@ -1,4 +1,4 @@
-package Anor.market.presentation.controller;
+package Anor.market.presentation.controller.catalog.product;
 
 import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.product.dto.ProductDTO;

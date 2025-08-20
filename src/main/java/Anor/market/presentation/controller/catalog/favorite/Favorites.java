@@ -1,4 +1,4 @@
-package Anor.market.presentation.controller;
+package Anor.market.presentation.controller.catalog.favorite;
 
 import Anor.market.application.dto.catalog.favorite.create.FavoriteCreateDTO;
 import Anor.market.application.dto.catalog.favorite.dto.FavoriteDTO;

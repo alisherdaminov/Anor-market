@@ -1,4 +1,4 @@
-package Anor.market.presentation.controller;
+package Anor.market.presentation.controller.auth;
 
 import Anor.market.application.dto.auth.create.UserCreatedDTO;
 import Anor.market.application.dto.auth.dto.UserDTO;
