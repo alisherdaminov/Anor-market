@@ -53,6 +53,7 @@ public class BranchServiceImpl implements BranchesService {
             throw new AppBadException("You do not have any permission to make a branch of Anor market!");
         }
         BranchesEntity branches = branchesRepository.findById(branchId).orElseThrow(() -> new AppBadException("Branch id is not found!"));
+        branches.setBranchTitle(createDTO.getBranchTitle());
         branches.setCityName(createDTO.getCityName());
         branchesRepository.save(branches);
         return branchesMapper.toDTO(branches);
