@@ -12,5 +12,6 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BranchesCreateDTO {
 
+    private String branchTitle;
     private String cityName;
 }

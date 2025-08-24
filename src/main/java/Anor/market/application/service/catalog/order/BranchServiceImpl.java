@@ -49,6 +49,9 @@ public class BranchServiceImpl implements BranchesService {
     /// UPDATE ALL BRANCHES DATA BY BRANCH ID
     @Override
     public BranchesDTO updateBranch(String branchId, BranchesCreateDTO createDTO) {
+        if (SpringSecurityValid.hasRole(Roles.USER) && SpringSecurityValid.hasRole(Roles.SELLER)) {
+            throw new AppBadException("You do not have any permission to make a branch of Anor market!");
+        }
         BranchesEntity branches = branchesRepository.findById(branchId).orElseThrow(() -> new AppBadException("Branch id is not found!"));
         branches.setCityName(createDTO.getCityName());
         branchesRepository.save(branches);

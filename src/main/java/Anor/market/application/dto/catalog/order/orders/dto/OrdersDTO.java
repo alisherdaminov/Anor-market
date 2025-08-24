@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,12 +17,14 @@ import java.time.LocalDateTime;
 public class OrdersDTO {
 
     private String ordersId;
+    private String productId;
     private String branchTitle;
     private String consumerName;
     private String consumerPhoneNumber;
     private String deliveryTitle;
+    private String branchName;
+    private String cardName;
     private int productPrice;
-    private int deliveryPrice;
     private int discountProductPrice;
     private int overallPrice;
     private BranchesDTO branches;

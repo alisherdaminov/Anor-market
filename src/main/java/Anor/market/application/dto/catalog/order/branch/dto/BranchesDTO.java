@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class BranchesDTO {
 
     private String branchId;
+    private String branchTitle;
     private String cityName;
     private LocalDateTime localDateTime;
 }

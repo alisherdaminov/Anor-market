@@ -21,6 +21,7 @@ public class CardsMapper {
     /// ENTITY TO DTO
     public CardsDTO toDTO(CardsEntity entity) {
         return CardsDTO.builder()
+                .cardsId(entity.getCardsId())
                 .cardName(entity.getCardName())
                 .localDateTime(entity.getLocalDateTime())
                 .build();

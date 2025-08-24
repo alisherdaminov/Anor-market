@@ -3,11 +3,14 @@ package Anor.market.domain.model.entity.catalog.product;
 import Anor.market.domain.model.entity.catalog.cart.CartEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
 import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
+import Anor.market.domain.model.entity.catalog.order.OrdersEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -58,5 +61,9 @@ public class ProductEntity {
     //Favorite
     @OneToOne(mappedBy = "productEntityFavorite", fetch = FetchType.LAZY)
     private FavoriteEntity favorites;
+
+    //Orders
+    @OneToMany(mappedBy = "productEntityOrders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrdersEntity> ordersEntityList = new ArrayList<>();
 
 }

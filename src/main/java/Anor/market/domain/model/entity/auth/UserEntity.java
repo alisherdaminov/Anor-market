@@ -1,5 +1,6 @@
 package Anor.market.domain.model.entity.auth;
 
+import Anor.market.domain.model.entity.catalog.order.OrdersEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,9 +37,15 @@ public class UserEntity {
     private LocalDateTime localDateTime = LocalDateTime.now();
 
 
+    //Roles
     @OneToOne(mappedBy = "userEntityRoles")
     private RolesEntity rolesEntityUser;
 
+    //Orders
+    @OneToOne(mappedBy = "userEntityOrders")
+    private OrdersEntity ordersEntityUser;
+
+    //RefreshToken
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<RefreshTokenEntity> refreshToken;
 }

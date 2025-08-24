@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "branch")
@@ -17,17 +19,15 @@ public class BranchesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String branchId;
+    @Column(name = "branch_title")
+    private String branchTitle;
     @Column(name = "city_name")
     private String cityName;
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime = LocalDateTime.now();
 
 
-    //OrdersService
-    @Column(name = "order_id")
-    private String orderId;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
-    private OrdersEntity ordersEntityBranches;
+    //Orders
+    @OneToMany(mappedBy = "branchesEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrdersEntity> ordersList = new ArrayList<>();
 }

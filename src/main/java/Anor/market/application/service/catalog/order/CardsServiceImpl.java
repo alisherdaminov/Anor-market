@@ -48,6 +48,9 @@ public class CardsServiceImpl implements CardService {
     /// UPDATE ALL CARDS DATA BY ID
     @Override
     public CardsDTO updateCard(String cardId, CardsCreateDTO createDTO) {
+        if (SpringSecurityValid.hasRole(Roles.USER) && SpringSecurityValid.hasRole(Roles.SELLER)) {
+            throw new AppBadException("You do not have any permission to make a card!");
+        }
         CardsEntity cardsEntity = cardsRepository.findById(cardId).orElseThrow(() -> new AppBadException("Card id is not found!"));
         cardsEntity.setCardName(createDTO.getCardName());
         cardsRepository.save(cardsEntity);

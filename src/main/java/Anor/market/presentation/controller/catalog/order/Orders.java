@@ -19,12 +19,11 @@ public class Orders {
     @Autowired
     private OrdersServiceImpl ordersService;
 
-    @PostMapping("/{productId}")
+    @PostMapping
     public ResponseEntity<AppResponse<OrdersDTO>> createOrder(
             @Valid
-            @PathVariable("productId") String productId,
             @RequestBody OrdersCreateDTO createDTO) {
-        return ResponseEntity.ok().body(new AppResponse<>(ordersService.createOrder(createDTO, productId), "success", new Date()));
+        return ResponseEntity.ok().body(new AppResponse<>(ordersService.createOrder(createDTO), "success", new Date()));
     }
 
     @GetMapping("/list")

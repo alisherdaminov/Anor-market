@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cards")
@@ -21,11 +23,7 @@ public class CardsEntity {
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime = LocalDateTime.now();
 
-    //OrdersService
-    @Column(name = "order_cards_id")
-    private String orderCardsId;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_cards_id", insertable = false, updatable = false)
-    private OrdersEntity ordersEntityCards;
+    //Orders
+    @OneToMany(mappedBy = "cardsEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrdersEntity> ordersList = new ArrayList<>();
 }
