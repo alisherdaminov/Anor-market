@@ -1,11 +1,13 @@
 package Anor.market.application.dto.catalog.product.dto;
 
+import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,4 +30,5 @@ public class ProductDTO {
     private int discountPriceWithoutCard;
     private LocalDate deliveryDate;
     private LocalDateTime localDateTime;
+    private List<ProductImageDTO> images;
 }
