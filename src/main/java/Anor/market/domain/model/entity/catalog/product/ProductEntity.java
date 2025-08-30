@@ -68,19 +68,8 @@ public class ProductEntity {
     private List<OrdersEntity> ordersEntityList = new ArrayList<>();
 
     //Images
-    @OneToMany(mappedBy = "productEntityImage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "productEntityImage", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProductImageEntity> images = new ArrayList<>();
-
-    public void addImage(ProductImageEntity productImage) {
-        productImage.setProductEntityImage(this);
-        productImage.setSortOrder(images.size());
-        images.add(productImage);
-    }
-
-    public void removeImage(String imageId) {
-        images.removeIf(i -> i.getImageId().equals(imageId));
-        for (int idx = 0; idx < images.size(); idx++) images.get(idx).setSortOrder(idx);
-    }
 
 
 }

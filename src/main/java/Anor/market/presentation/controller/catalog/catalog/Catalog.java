@@ -35,12 +35,12 @@ public class Catalog {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
-    public ResponseEntity<AppResponse<PageResponse<CatalogDTO>>> getAll(
+    public ResponseEntity<PageResponse<CatalogDTO>> getAll(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size) {
         Page<CatalogDTO> catalogPage = service.getAll(PageUtil.page(page), size);
         PageResponse<CatalogDTO> pageResponse = new PageResponse<>(catalogPage);
-        return ResponseEntity.ok(new AppResponse<>(pageResponse, "success", new Date()));
+        return ResponseEntity.ok(pageResponse);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

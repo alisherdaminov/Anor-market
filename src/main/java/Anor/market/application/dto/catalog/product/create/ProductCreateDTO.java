@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductCreateDTO {
 
+    private String categoryItemListId;
     private String sellerName;
     private String productName;
     private String deliveryTitle;

@@ -4,6 +4,7 @@ import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import Anor.market.application.service.catalog.product.ProductServiceImpl;
 import Anor.market.presentation.response.AppResponse;
+import Anor.market.presentation.response.PageResponse;
 import Anor.market.shared.util.PageUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,30 +29,29 @@ public class Product {
     private ProductServiceImpl service;
 
     @PreAuthorize("hasRole('SELLER')")
-    @PostMapping(value = "/{categoryItemListId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AppResponse<ProductDTO>> createProduct(
-            @PathVariable("categoryItemListId") String categoryItemListId,
-            @Valid @RequestPart("product") ProductCreateDTO createDTO,
-            @RequestPart("files") List<MultipartFile> files) throws IOException {
-        ProductDTO dto = service.createProduct(categoryItemListId, createDTO, files);
+            @RequestPart("product") ProductCreateDTO createDTO,
+            @RequestPart("files") List<MultipartFile> files) {
+        ProductDTO dto = service.createProduct(createDTO, files);
         return ResponseEntity.ok(new AppResponse<>(dto, "success", new Date()));
     }
 
-
     @GetMapping("/{productId}/images/{imageId}")
-    public ResponseEntity<Resource> getImage(
+    public ResponseEntity<Resource> getProductWithImage(
             @PathVariable String productId,
             @PathVariable String imageId) throws IOException {
-        return service.getImage(productId, imageId);
+        return service.getProductWithImage(productId, imageId);
     }
-
 
     @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/list")
-    public ResponseEntity<AppResponse<Page<ProductDTO>>> getAll(
+    public ResponseEntity<PageResponse<ProductDTO>> getAll(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size) {
-        return ResponseEntity.ok().body(new AppResponse<>(service.getAll(PageUtil.page(page), size), "success", new Date()));
+        Page<ProductDTO> productDTOPage = service.getAll(PageUtil.page(page), size);
+        PageResponse<ProductDTO> pageResponse = new PageResponse<>(productDTOPage);
+        return ResponseEntity.ok(pageResponse);
     }
 
     @PreAuthorize("hasRole('SELLER')")
@@ -71,16 +71,9 @@ public class Product {
         return ResponseEntity.ok().body(new AppResponse<>(service.deleteProduct(productId), "success", new Date()));
     }
 
-    @PostMapping(value = "/{id}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ProductDTO addImages(
-            @PathVariable String id,
-            @RequestPart("files") List<MultipartFile> files) throws IOException {
-        return service.addImages(id, files);
-    }
-
     @DeleteMapping("/{productId}/images/{imageId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeImage(@PathVariable String productId, @PathVariable String imageId) throws IOException {
+    public void removeImage(@PathVariable String productId, @PathVariable String imageId) {
         service.removeImage(productId, imageId);
     }
 }

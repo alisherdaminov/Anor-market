@@ -2,21 +2,19 @@ package Anor.market.application.mapper.catalog.product;
 
 import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.product.dto.ProductDTO;
-import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
+import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
 import Anor.market.domain.model.entity.catalog.product.ProductEntity;
-import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
 
 @Component
 public class ProductMapper {
 
+    @Autowired
+    private ProductImageMapper productImageMapper;
 
     /// DTO TO ENTITY
     public ProductEntity toProductEntity(ProductCreateDTO createDTO) {
@@ -82,32 +80,22 @@ public class ProductMapper {
     }
 
     /// ENTITY TO DTO
-    public ProductDTO toProductDTO(ProductEntity product) {
-        List<ProductImageDTO> imageDTOs = product.getImages().stream()
-                .sorted(Comparator.comparingInt(ProductImageEntity::getSortOrder))
-                .map(img -> ProductImageDTO.builder()
-                        .imageId(img.getImageId())
-                        .url("/api/products/" + product.getProductId() + "/images/" + img.getImageId())
-                        .contentType(img.getContentType())
-                        .sizeBytes(img.getSizeBytes())
-                        .sortOrder(img.getSortOrder())
-                        .build())
-                .toList();
+    public ProductDTO toProductDTO(ProductEntity productEntity) {
         return ProductDTO.builder()
-                .productId(product.getProductId())
-                .sellerName(product.getSellerName())
-                .productName(product.getProductName())
-                .deliveryTitle(product.getDeliveryTitle())
-                .productDescription(product.getProductDescription())
-                .productColor(product.getProductColor())
-                .price(product.getPrice())
-                .discountWithCardPercent(product.getDiscountWithCardPercent())
-                .discountPriceWithCard(product.getDiscountPriceWithCard())
-                .discountWithoutCardPercent(product.getDiscountWithoutCardPercent())
-                .discountPriceWithoutCard(product.getDiscountPriceWithoutCard())
-                .deliveryDate(product.getDeliveryDate())
-                .localDateTime(product.getLocalDateTime())
-                .images(imageDTOs)
+                .productId(productEntity.getProductId())
+                .sellerName(productEntity.getSellerName())
+                .productName(productEntity.getProductName())
+                .deliveryTitle(productEntity.getDeliveryTitle())
+                .productDescription(productEntity.getProductDescription())
+                .productColor(productEntity.getProductColor())
+                .price(productEntity.getPrice())
+                .discountWithCardPercent(productEntity.getDiscountWithCardPercent())
+                .discountPriceWithCard(productEntity.getDiscountPriceWithCard())
+                .discountWithoutCardPercent(productEntity.getDiscountWithoutCardPercent())
+                .discountPriceWithoutCard(productEntity.getDiscountPriceWithoutCard())
+                .deliveryDate(productEntity.getDeliveryDate())
+                .localDateTime(productEntity.getLocalDateTime())
+                .images(productImageMapper.productImageDTOList(productEntity))
                 .build();
     }
 }

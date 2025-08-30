@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "product_images")
@@ -15,25 +16,23 @@ import java.time.LocalDateTime;
 @Builder
 public class ProductImageEntity {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String imageId;
-    @Column(name = "file_name", nullable = false)
-    private String fileName;
-    @Column(name = "url", nullable = false)
+    @Column(name = "origenName")
+    private String origenName;
+    @Column(name = "extension")
+    private String extension;
+    @Column(name = "path")
+    private String path;
+    @Column(name = "size")
+    private Long size;
+    @Column(name = "url")
     private String url;
-    @Column(name = "content_type", nullable = false)
-    private String contentType;
-    @Column(name = "size_bytes", nullable = false)
-    private long sizeBytes;
-    @Column(name = "sort_order", nullable = false)
-    private int sortOrder;
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "createdAt")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     //Products
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private ProductEntity productEntityImage;
 }
