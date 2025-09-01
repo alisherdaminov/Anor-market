@@ -2,7 +2,7 @@ package Anor.market.application.mapper.catalog.favorite;
 
 import Anor.market.application.dto.catalog.favorite.create.FavoriteCreateDTO;
 import Anor.market.application.dto.catalog.favorite.dto.FavoriteDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

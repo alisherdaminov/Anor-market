@@ -1,7 +1,7 @@
 package Anor.market.application.mapper.catalog.product.image;
 
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
 import org.springframework.stereotype.Component;
 

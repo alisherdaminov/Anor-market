@@ -1,6 +1,6 @@
 package Anor.market.domain.model.entity.catalog.catalog;
 
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

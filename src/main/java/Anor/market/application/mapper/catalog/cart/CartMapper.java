@@ -3,7 +3,7 @@ package Anor.market.application.mapper.catalog.cart;
 
 import Anor.market.application.dto.catalog.cart.create.CartCreateDTO;
 import Anor.market.application.dto.catalog.cart.dto.CartDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.domain.model.entity.catalog.cart.CartEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

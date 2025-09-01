@@ -6,7 +6,7 @@ import Anor.market.application.dto.catalog.catalog.create.CategoryItemListCreate
 import Anor.market.application.dto.catalog.catalog.dto.CatalogDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryItemListDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.domain.model.entity.catalog.catalog.CatalogEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;

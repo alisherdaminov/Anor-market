@@ -4,7 +4,7 @@ import Anor.market.application.dto.catalog.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CatalogDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryItemListDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import Anor.market.application.service.catalog.catalog.CatalogServiceImpl;
 import Anor.market.presentation.response.AppResponse;
 import Anor.market.presentation.response.PageResponse;

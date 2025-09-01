@@ -3,7 +3,7 @@ package Anor.market.application.mapper.catalog.catalog;
 import Anor.market.application.dto.catalog.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.catalog.create.CategoryCreateDTO;
 import Anor.market.application.dto.catalog.catalog.create.CategoryItemListCreateDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.domain.model.entity.catalog.catalog.CatalogEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;

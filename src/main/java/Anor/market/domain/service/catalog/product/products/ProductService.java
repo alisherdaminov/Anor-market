@@ -1,7 +1,7 @@
-package Anor.market.domain.service.catalog.product;
+package Anor.market.domain.service.catalog.product.products;
 
-import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

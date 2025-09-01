@@ -1,12 +1,10 @@
 package Anor.market.application.service.catalog.product.images;
 
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
-import Anor.market.domain.repository.catalog.product.ProductRepository;
+import Anor.market.domain.repository.catalog.product.products.ProductRepository;
 import Anor.market.domain.repository.catalog.product.image.ProductImageRepository;
 import Anor.market.domain.service.catalog.product.images.ImageService;
 import Anor.market.shared.exceptions.AppBadException;
@@ -16,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

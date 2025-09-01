@@ -1,11 +1,10 @@
 package Anor.market.domain.model.entity.catalog.cart;
 
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "carts")

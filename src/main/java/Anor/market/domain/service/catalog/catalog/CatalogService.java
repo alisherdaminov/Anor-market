@@ -4,7 +4,7 @@ import Anor.market.application.dto.catalog.catalog.create.CatalogCreateDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CatalogDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryItemListDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import org.springframework.data.domain.Page;
 
 public interface CatalogService {

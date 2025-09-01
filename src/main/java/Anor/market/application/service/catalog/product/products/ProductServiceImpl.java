@@ -1,16 +1,16 @@
-package Anor.market.application.service.catalog.product;
+package Anor.market.application.service.catalog.product.products;
 
-import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
-import Anor.market.application.mapper.catalog.product.ProductMapper;
+import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
+import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.application.service.catalog.product.images.ImageServiceImpl;
 import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.domain.repository.catalog.catalog.CategoryItemListRepository;
-import Anor.market.domain.repository.catalog.product.ProductRepository;
-import Anor.market.domain.service.catalog.product.ProductService;
+import Anor.market.domain.repository.catalog.product.products.ProductRepository;
+import Anor.market.domain.service.catalog.product.products.ProductService;
 import Anor.market.infrastucture.config.validation.SpringSecurityValid;
 import Anor.market.shared.enums.Roles;
 import Anor.market.shared.exceptions.AppBadException;

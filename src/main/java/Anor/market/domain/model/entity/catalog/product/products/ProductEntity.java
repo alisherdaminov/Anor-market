@@ -1,9 +1,10 @@
-package Anor.market.domain.model.entity.catalog.product;
+package Anor.market.domain.model.entity.catalog.product.products;
 
 import Anor.market.domain.model.entity.catalog.cart.CartEntity;
 import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
 import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
 import Anor.market.domain.model.entity.catalog.order.OrdersEntity;
+import Anor.market.domain.model.entity.catalog.product.comments.CommentsEntity;
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -64,12 +65,16 @@ public class ProductEntity {
     private FavoriteEntity favorites;
 
     //Orders
-    @OneToMany(mappedBy = "productEntityOrders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productEntityOrders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrdersEntity> ordersEntityList = new ArrayList<>();
 
     //Images
     @OneToMany(mappedBy = "productEntityImage", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProductImageEntity> images = new ArrayList<>();
+
+    //Comments
+    @OneToMany(mappedBy = "productEntityComments", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentsEntity> commentsEntityList = new ArrayList<>();
 
 
 }

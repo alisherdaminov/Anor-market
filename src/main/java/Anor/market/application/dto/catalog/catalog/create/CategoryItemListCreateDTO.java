@@ -1,6 +1,6 @@
 package Anor.market.application.dto.catalog.catalog.create;
 
-import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 

@@ -1,8 +1,8 @@
-package Anor.market.presentation.controller.catalog.product;
+package Anor.market.presentation.controller.catalog.product.products;
 
-import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
-import Anor.market.application.service.catalog.product.ProductServiceImpl;
+import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
+import Anor.market.application.service.catalog.product.products.ProductServiceImpl;
 import Anor.market.presentation.response.AppResponse;
 import Anor.market.presentation.response.PageResponse;
 import Anor.market.shared.util.PageUtil;

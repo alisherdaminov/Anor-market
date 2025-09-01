@@ -1,9 +1,9 @@
-package Anor.market.application.mapper.catalog.product;
+package Anor.market.application.mapper.catalog.product.products;
 
-import Anor.market.application.dto.catalog.product.create.ProductCreateDTO;
-import Anor.market.application.dto.catalog.product.dto.ProductDTO;
+import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
+import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
-import Anor.market.domain.model.entity.catalog.product.ProductEntity;
+import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,13 @@
-package Anor.market.application.dto.catalog.product.create;
+package Anor.market.application.dto.catalog.product.products.dto;
 
+import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.math.BigDecimal;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,9 +15,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductCreateDTO {
+public class ProductDTO {
 
-    private String categoryItemListId;
+    private String productId;
     private String sellerName;
     private String productName;
     private String deliveryTitle;
@@ -22,6 +25,10 @@ public class ProductCreateDTO {
     private String productColor;
     private int price;
     private int discountWithCardPercent;
+    private int discountPriceWithCard;
     private int discountWithoutCardPercent;
-    private String deliveryDate;
+    private int discountPriceWithoutCard;
+    private LocalDate deliveryDate;
+    private LocalDateTime localDateTime;
+    private List<ProductImageDTO> images;
 }
