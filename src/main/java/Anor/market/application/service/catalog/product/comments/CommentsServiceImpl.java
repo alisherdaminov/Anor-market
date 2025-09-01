@@ -67,6 +67,12 @@ public class CommentsServiceImpl implements CommentsService {
         return commentsRepository.findAll(Sort.by(Sort.Direction.DESC, "localDate")).stream().map(commentsMapper::toDTO).toList();
     }
 
+    /// GET ALL COMMENTS COUNT
+    @Override
+    public int getAllCommentsCount() {
+        return commentsRepository.commentsCount();
+    }
+
     /// DELETE THE COMMENTS BY ID
     @Override
     public String deleteCommentById(String commentsId) {

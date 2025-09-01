@@ -11,5 +11,7 @@ public interface CommentsService {
 
     List<CommentsDTO> getAllComments();
 
+    int getAllCommentsCount();
+
     String deleteCommentById(String commentsId);
 }

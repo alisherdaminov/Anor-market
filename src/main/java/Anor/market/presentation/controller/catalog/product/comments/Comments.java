@@ -30,6 +30,11 @@ public class Comments {
         return ResponseEntity.ok().body(new AppResponse<>(service.getAllComments(), "success", new Date()));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<AppResponse<Integer>> getAllCommentsCount() {
+        return ResponseEntity.ok().body(new AppResponse<>(service.getAllCommentsCount(), "success", new Date()));
+    }
+
     @DeleteMapping("/{commentsId}")
     public ResponseEntity<AppResponse<String>> deleteCommentById(@PathVariable("commentsId") String commentsId) {
         return ResponseEntity.ok().body(new AppResponse<>(service.deleteCommentById(commentsId), "success", new Date()));
