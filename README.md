@@ -26,3 +26,16 @@ Application: service orchestrations, transaction boundaries, events.
 Domain: aggregates, entities, value objects, domain services.
 Infrastructure: persistence (JPA), cache, messaging, media storage.
 
+![Image](https://github.com/user-attachments/assets/05b04fcc-dfa8-4c2a-8120-83f3a5feb411)
+
+![Image](https://github.com/user-attachments/assets/24f3ccc8-badf-412d-80f9-608e13911892)
+
+![Image](https://github.com/user-attachments/assets/4af4eef1-ccce-4eda-bf81-76815fd56cba)
+
+![Image](https://github.com/user-attachments/assets/774ef769-9727-4968-b180-e940dd263f07)
+
+![Image](https://github.com/user-attachments/assets/1dcd331b-5739-4dfb-a1e2-179f9ba90425)
+
+![Image](https://github.com/user-attachments/assets/aad6affa-7d77-4544-bf93-b902821479be)
+
+![Image](https://github.com/user-attachments/assets/a2492a60-757f-4c8b-bc55-27ddbc24ab53)
