@@ -7,9 +7,8 @@ Features
 Customer‑facing
 Authentication & User Profiles: phone/email login, JWT tokens, roles, profile management.
 Catalog & Search: hierarchical categories, filters, full‑text search with Elasticsearch.
-Product Media: high‑resolution images, video support, thumbnails, S3/MinIO integration.
+Product Media: high‑resolution images.
 Cart & Checkout: persistent carts, promo codes, delivery selection, payment intents.
-Order Lifecycle: tracking statuses, invoices, delivery partner integration.
 Reviews & Ratings: verified reviews, aggregated ratings, abuse reporting.
 Recommendations: personalized (based on history) & global top sellers.
 
