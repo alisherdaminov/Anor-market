@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,15 +62,21 @@ public class ProductServiceImpl implements ProductService {
             throw new AppBadException("You are not a seller!");
         }
         //calling by id of the category item list and setting data in product
-        CategoryItemListEntity categoryItemList = categoryItemListRepository.findById(createDTO.getCategoryItemListId())
-                .orElseThrow(() -> new RuntimeException("CategoryItemList not found"));
+        CategoryItemListEntity categoryItemList = categoryItemListRepository.findById(createDTO.getCategoryItemListId()).orElseThrow(() -> new RuntimeException("CategoryItemList not found"));
 
         //creation of Product for sale
         ProductEntity productEntity = productMapper.toProductEntity(createDTO);
         productEntity.setCategoryItemListEntity(categoryItemList); // <---------> PARENT LINK
+        productEntity.setSellerName(userEntity.getFirstName());
+
+        LocalDate deliveryDate = LocalDate.now().plusDays(3); // "2025-08-08"
+        if (LocalDate.now().isAfter(deliveryDate)) {
+            throw new IllegalArgumentException("Delivery date cannot be in the past");
+        }
+        productEntity.setDeliveryDate(deliveryDate);
         //saved in the DATABASE
         productRepository.save(productEntity);
-        //images saved by using imageService save Images as an Async
+        //images saved by using imageService save Images
         imageService.saveImages(productEntity.getProductId(), files);
         //to dto
         return productMapper.toProductDTO(productEntity);
@@ -102,9 +109,14 @@ public class ProductServiceImpl implements ProductService {
         if (!isSeller) {
             throw new AppBadException("You are not seller!");
         }
+        LocalDate deliveryDate = LocalDate.now().plusDays(3); // "2025-08-08"
+        if (LocalDate.now().isAfter(deliveryDate)) {
+            throw new IllegalArgumentException("Delivery date cannot be in the past");
+        }
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
         //update of Product for sale
         ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), createDTO);
+        productEntity.setDeliveryDate(deliveryDate);
         //saved in the DATABASE
         productRepository.save(productEntity);
         //to dto

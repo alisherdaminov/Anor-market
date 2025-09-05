@@ -26,13 +26,7 @@ public class ProductMapper {
         int discountedWithCard = price * percentOfDiscountWithCard / divideByHundred;
         int discountedWithoutCard = price * percentOfDiscountWithoutCard / divideByHundred;
 
-        LocalDate deliveryDate = LocalDate.parse(createDTO.getDeliveryDate()); // "2025-08-08"
-        if (LocalDate.now().isAfter(deliveryDate)) {
-            throw new IllegalArgumentException("Delivery date cannot be in the past");
-        }
-
         return ProductEntity.builder()
-                .sellerName(createDTO.getSellerName())
                 .productName(createDTO.getProductName())
                 .deliveryTitle(createDTO.getDeliveryTitle())
                 .productDescription(createDTO.getProductDescription())
@@ -42,7 +36,6 @@ public class ProductMapper {
                 .discountPriceWithCard(discountedWithCard)
                 .discountWithoutCardPercent(percentOfDiscountWithoutCard)
                 .discountPriceWithoutCard(discountedWithoutCard)
-                .deliveryDate(deliveryDate)
                 .localDateTime(LocalDateTime.now())
                 .build();
     }
@@ -58,13 +51,8 @@ public class ProductMapper {
         int discountedWithCard = price * percentOfDiscountWithCard / divideByHundred;
         int discountedWithoutCard = price * percentOfDiscountWithoutCard / divideByHundred;
 
-        LocalDate deliveryDate = LocalDate.parse(createDTO.getDeliveryDate()); // "2025-08-08"
-        if (LocalDate.now().isAfter(deliveryDate)) {
-            throw new IllegalArgumentException("Delivery date cannot be in the past");
-        }
         return ProductEntity.builder()
                 .productId(productId)
-                .sellerName(createDTO.getSellerName())
                 .productName(createDTO.getProductName())
                 .deliveryTitle(createDTO.getDeliveryTitle())
                 .productDescription(createDTO.getProductDescription())
@@ -74,7 +62,6 @@ public class ProductMapper {
                 .discountPriceWithCard(discountedWithCard)
                 .discountWithoutCardPercent(percentOfDiscountWithoutCard)
                 .discountPriceWithoutCard(discountedWithoutCard)
-                .deliveryDate(deliveryDate)
                 .localDateTime(LocalDateTime.now())
                 .build();
     }

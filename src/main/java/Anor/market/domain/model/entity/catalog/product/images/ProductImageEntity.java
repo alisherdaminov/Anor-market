@@ -1,6 +1,7 @@
 package Anor.market.domain.model.entity.catalog.product.images;
 
 import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.entity.top_products.TopProductsEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,4 +35,9 @@ public class ProductImageEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductEntity productEntityImage;
+
+    //Top Products
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "top_products_id")
+    private TopProductsEntity topProductsEntity;
 }

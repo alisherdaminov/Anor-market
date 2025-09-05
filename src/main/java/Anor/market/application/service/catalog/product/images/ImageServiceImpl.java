@@ -90,7 +90,6 @@ public class ImageServiceImpl implements ImageService {
                 productImage.setProductEntityImage(product); //<--------> PARENT LINK
 
                 //saved into the DATABASE
-
                 productImageRepository.save(productImage);
 
                 result.add(productImageMapper.toDTO(productImage, fullUrl));

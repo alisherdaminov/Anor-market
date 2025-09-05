@@ -6,6 +6,7 @@ import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
 import Anor.market.domain.model.entity.catalog.order.OrdersEntity;
 import Anor.market.domain.model.entity.catalog.product.comments.CommentsEntity;
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
+import Anor.market.domain.model.entity.top_products.TopProductsEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -76,5 +77,8 @@ public class ProductEntity {
     @OneToMany(mappedBy = "productEntityComments", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentsEntity> commentsEntityList = new ArrayList<>();
 
+    //Top products
+    @OneToMany(mappedBy = "productEntityTop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TopProductsEntity> topProductsEntityList = new ArrayList<>();
 
 }

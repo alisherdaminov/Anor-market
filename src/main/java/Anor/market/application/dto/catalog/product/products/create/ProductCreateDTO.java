@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 public class ProductCreateDTO {
 
     private String categoryItemListId;
-    private String sellerName;
     private String productName;
     private String deliveryTitle;
     private String productDescription;
@@ -23,5 +22,4 @@ public class ProductCreateDTO {
     private int price;
     private int discountWithCardPercent;
     private int discountWithoutCardPercent;
-    private String deliveryDate;
 }

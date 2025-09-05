@@ -87,16 +87,6 @@ public class CatalogServiceImpl implements CatalogService {
                 itemEntity.setCategoryEntity(categoryEntity);// ---- PARENT LINK
                 /// save categoryItemList
                 categoryItemListRepository.save(itemEntity);
-                /// PRODUCT ENTITY LIST
-                List<ProductEntity> productEntityList = itemDTO.getProductList().stream().map(productDTO -> {
-                    ProductEntity product = productMapper.toProductEntity(productDTO);
-                    product.setCategoryItemListEntity(itemEntity);// ---- PARENT LINK
-                    /// save products
-                    productRepository.save(product);
-                    return product;
-                }).toList();
-
-                itemEntity.setProductEntityList(productEntityList);
                 return itemEntity;
             }).collect(Collectors.toList());
 
@@ -168,17 +158,6 @@ public class CatalogServiceImpl implements CatalogService {
             List<CategoryItemListEntity> categoryItemListEntityList = categoryCreateDTO.getCategoryItemListCreateList().stream().map(itemListCreateDTO -> {
                 CategoryItemListEntity itemEntity = catalogUpdateMapper.toUpdateCategoryItemListEntity(product.getProductId(), itemListCreateDTO);
                 itemEntity.setCategoryEntity(category);// ---- PARENT LINK
-
-                /// PRODUCT ENTITY LIST
-                List<ProductEntity> productEntityList = itemListCreateDTO.getProductList().stream().map(productCreateDTO -> {
-                    ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), productCreateDTO);
-                    productEntity.setCategoryItemListEntity(itemEntity);// ---- PARENT LINK
-                    /// save products
-                    productRepository.save(productEntity);
-                    return productEntity;
-                }).collect(Collectors.toList());
-
-                itemEntity.setProductEntityList(productEntityList);
                 /// save categoryItemList
                 categoryItemListRepository.save(itemEntity);
                 return itemEntity;
