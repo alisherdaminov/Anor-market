@@ -1,12 +1,11 @@
-package Anor.market.application.dto.top_products.dto;
+package Anor.market.application.dto.top_products.top_products.update;
 
-import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TopProductsDTO {
-    private String topProductsId;
+public class TopProductsUpdateDTO {
+
     private String sellerName;
     private String productName;
     private String deliveryTitle;
@@ -30,5 +29,4 @@ public class TopProductsDTO {
     private LocalDate isTopProductStartDate;
     private LocalDate isTopProductEndDate;
     private LocalDateTime localDateTime;
-    private List<ProductImageDTO> images;
 }

@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -61,8 +62,9 @@ public class ProductServiceImpl implements ProductService {
         if (!isSeller && SpringSecurityValid.hasRole(Roles.USER)) {
             throw new AppBadException("You are not a seller!");
         }
+        // UUID id = UUID.fromString(categoryItemListIdString);
         //calling by id of the category item list and setting data in product
-        CategoryItemListEntity categoryItemList = categoryItemListRepository.findById(createDTO.getCategoryItemListId()).orElseThrow(() -> new RuntimeException("CategoryItemList not found"));
+        CategoryItemListEntity categoryItemList = categoryItemListRepository.findByStringId(createDTO.getCategoryItemListId()).orElseThrow(() -> new RuntimeException("CategoryItemList not found"));
 
         //creation of Product for sale
         ProductEntity productEntity = productMapper.toProductEntity(createDTO);
@@ -113,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
         if (LocalDate.now().isAfter(deliveryDate)) {
             throw new IllegalArgumentException("Delivery date cannot be in the past");
         }
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
         //update of Product for sale
         ProductEntity productEntity = productMapper.toUpdateProductEntity(product.getProductId(), createDTO);
         productEntity.setDeliveryDate(deliveryDate);
@@ -126,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
     /// DELETE PRODUCT BY ID
     @Override
     public String deleteProduct(String productId) {
-        productRepository.deleteById(productId);
+        productRepository.deleteByProductId(productId);
         return "Deleted!";
     }
 

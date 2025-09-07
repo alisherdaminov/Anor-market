@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         }
         UserEntity user = authMapper.toEntity(userCreatedDTO);
         userRepository.save(user);
-        rolesService.createRole(user.getUserId(), Roles.USER);
+        rolesService.createRole(user, Roles.USER);
         return "User successfully registered!";
     }
 

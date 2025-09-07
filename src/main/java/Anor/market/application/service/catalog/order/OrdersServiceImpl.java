@@ -50,9 +50,9 @@ public class OrdersServiceImpl implements OrdersService {
 
         Integer userId = SpringSecurityValid.getCurrentUser();
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User is not found!"));
-        ProductEntity product = productRepository.findById(createDTO.getProductId()).orElseThrow(() -> new AppBadException("Product id is not found!"));
-        BranchesEntity branches = branchesRepository.findById(createDTO.getBranchId()).orElseThrow(() -> new AppBadException("Branch id is not found!"));
-        CardsEntity cards = cardsRepository.findById(createDTO.getCardId()).orElseThrow(() -> new AppBadException("Card id is not found!"));
+        ProductEntity product = productRepository.findByStringId(createDTO.getProductId().toString()).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        BranchesEntity branches = branchesRepository.findByStringId(createDTO.getBranchId()).orElseThrow(() -> new AppBadException("Branch id is not found!"));
+        CardsEntity cards = cardsRepository.findByStringId(createDTO.getCardId()).orElseThrow(() -> new AppBadException("Card id is not found!"));
         int overallPrice = product.getPrice() - product.getDiscountPriceWithCard();
 
         // Orders to entity creations
@@ -63,7 +63,7 @@ public class OrdersServiceImpl implements OrdersService {
         orders.setCardsEntity(cards);// <-----> PARENT LINK
 
         //setting other data coming from above databases
-        orders.setBranchTitle(branches.getBranchTitle());
+        orders.setBranchTitleOrders(branches.getBranchTitle());
         orders.setConsumerName(user.getFirstName());
         orders.setConsumerPhoneNumber(user.getPhoneNumber());
         orders.setDeliveryTitle(product.getDeliveryTitle());
@@ -87,7 +87,7 @@ public class OrdersServiceImpl implements OrdersService {
     /// DELETE ORDERS BY ID
     @Override
     public String deleteOrderById(String ordersId) {
-        ordersRepository.deleteById(ordersId);
+        ordersRepository.deleteByOrdersId(ordersId);
         return "Deleted!";
     }
 }

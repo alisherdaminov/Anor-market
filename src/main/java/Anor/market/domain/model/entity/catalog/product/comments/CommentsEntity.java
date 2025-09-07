@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "comments")
@@ -17,7 +18,7 @@ public class CommentsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String commentsId;
+    private UUID commentsId;
     @Column(name = "commenters_name")
     private String commentersName;
     @Column(name = "product_description")

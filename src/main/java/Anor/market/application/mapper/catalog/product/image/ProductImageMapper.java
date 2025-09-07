@@ -18,7 +18,6 @@ public class ProductImageMapper {
         if (entity == null) {
             return null;
         }
-
         return ProductImageDTO.builder()
                 .imageId(entity.getImageId())
                 .origenName(entity.getOrigenName())

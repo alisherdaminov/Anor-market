@@ -1,13 +1,12 @@
-package Anor.market.application.service.top_products;
+package Anor.market.application.service.top_products.top_products;
 
-import Anor.market.application.dto.top_products.create.TopProductsCreateDTO;
-import Anor.market.application.dto.top_products.dto.TopProductsDTO;
-import Anor.market.application.dto.top_products.update.TopProductsUpdateDTO;
+import Anor.market.application.dto.top_products.top_products.create.TopProductsCreateDTO;
+import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
+import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
 import Anor.market.application.mapper.top_products.TopProductsMapper;
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
 import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import Anor.market.domain.model.entity.top_products.TopProductsEntity;
-import Anor.market.domain.repository.catalog.product.image.ProductImageRepository;
 import Anor.market.domain.repository.catalog.product.products.ProductRepository;
 import Anor.market.domain.repository.top_products.TopProductsRepository;
 import Anor.market.domain.service.Top_products.TopProductsService;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TopProductsServiceImpl implements TopProductsService {
@@ -28,8 +28,6 @@ public class TopProductsServiceImpl implements TopProductsService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private ProductImageRepository productImageRepository;
-    @Autowired
     private TopProductsMapper topProductsMapper;
 
 
@@ -37,13 +35,13 @@ public class TopProductsServiceImpl implements TopProductsService {
     @Override
     public TopProductsDTO createTopProducts(TopProductsCreateDTO createDTO) {
         // find a product by id
-        ProductEntity product = productRepository.findById(createDTO.getProductId()).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        ProductEntity product = productRepository.findByStringId(createDTO.getProductId()).orElseThrow(() -> new AppBadException("Product id is not found!"));
         //creat a top product
         TopProductsEntity topProducts = topProductsMapper.toEntity(createDTO);
         topProducts.setProductEntityTop(product); // <----------> PARENT LINK
         // set a product image &  data's set from the productRepository DATABASE
         List<ProductImageEntity> images = new ArrayList<>(product.getImages());
-        images.forEach(productImageEntity -> productImageEntity.setProductEntityImage(product)); // <----------> PARENT LINK
+        images.forEach(productImageEntity -> productImageEntity.setTopProductsEntity(topProducts)); // <----------> PARENT LINK
         topProducts.setImages(images);
         topProducts.setSellerName(product.getSellerName());
         topProducts.setProductName(product.getProductName());
@@ -76,16 +74,16 @@ public class TopProductsServiceImpl implements TopProductsService {
 
     /// GET A TOP PRODUCT BY ID
     @Override
-    public TopProductsDTO getTopProductsById(String topProductsId) {
-        TopProductsEntity topProducts = topProductsRepository.findById(topProductsId).orElseThrow(() -> new AppBadException("Top products id not found!"));
+    public TopProductsDTO getTopProductsById(UUID topProductsId) {
+        TopProductsEntity topProducts = topProductsRepository.findById(topProductsId.toString()).orElseThrow(() -> new AppBadException("Top products id not found!"));
         return topProductsMapper.toDTO(topProducts);
     }
 
     /// UPDATE A TOP PRODUCT
     @Override
-    public TopProductsDTO updateTopProducts(String topProductsId, TopProductsUpdateDTO createDTO) {
+    public TopProductsDTO updateTopProducts(UUID topProductsId, TopProductsUpdateDTO createDTO) {
         // find a product by id
-        TopProductsEntity topProducts = topProductsRepository.findById(topProductsId).orElseThrow(() -> new AppBadException("Top products id not found!"));
+        TopProductsEntity topProducts = topProductsRepository.findById(topProductsId.toString()).orElseThrow(() -> new AppBadException("Top products id not found!"));
         //update
         TopProductsEntity topProductsEntity = topProductsMapper.toEntityUpdate(topProducts.getTopProductsId(), createDTO);
         //updated into the DATABASE

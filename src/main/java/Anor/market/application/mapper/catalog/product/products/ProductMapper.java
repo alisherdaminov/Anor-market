@@ -2,6 +2,7 @@ package Anor.market.application.mapper.catalog.product.products;
 
 import Anor.market.application.dto.catalog.product.products.create.ProductCreateDTO;
 import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
+import Anor.market.application.mapper.catalog.product.comments.CommentsMapper;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
 import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,16 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
 
     @Autowired
     private ProductImageMapper productImageMapper;
+    @Autowired
+    private CommentsMapper commentsMapper;
 
     /// DTO TO ENTITY
     public ProductEntity toProductEntity(ProductCreateDTO createDTO) {
@@ -40,9 +45,8 @@ public class ProductMapper {
                 .build();
     }
 
-
     /// DTO TO ENTITY UPDATE
-    public ProductEntity toUpdateProductEntity(String productId, ProductCreateDTO createDTO) {
+    public ProductEntity toUpdateProductEntity(UUID productId, ProductCreateDTO createDTO) {
         int price = createDTO.getPrice();
         int percentOfDiscountWithCard = createDTO.getDiscountWithCardPercent();
         int percentOfDiscountWithoutCard = createDTO.getDiscountWithoutCardPercent();
@@ -82,6 +86,10 @@ public class ProductMapper {
                 .discountPriceWithoutCard(productEntity.getDiscountPriceWithoutCard())
                 .deliveryDate(productEntity.getDeliveryDate())
                 .localDateTime(productEntity.getLocalDateTime())
+                .comments(productEntity.getCommentsEntityList()
+                        .stream()
+                        .map(commentsMapper::toDTO)
+                        .collect(Collectors.toList()))
                 .images(productImageMapper.productImageDTOList(productEntity))
                 .build();
     }

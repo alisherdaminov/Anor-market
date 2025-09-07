@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JwtTokens {
 
@@ -18,11 +19,13 @@ public class JwtTokens {
     private static final SecureRandom secureRandom = new SecureRandom(); // thread - safe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder().withoutPadding();
 
-    public static String encode(String email, Integer userId, Roles roles) {
+    public static String encode(String email, Integer userId, List<Roles> roles) {
+        String rolesString = roles.stream().map(Roles::name).collect(Collectors.joining(","));
         Map<String, String> extraClaims = new HashMap<>();
-        extraClaims.put("roles", roles.name());
+        extraClaims.put("roles", rolesString);
         extraClaims.put("userId", String.valueOf(userId));
         extraClaims.put("randomData", UUID.randomUUID().toString().repeat(8));
+
         return Jwts
                 .builder()
                 .claims(extraClaims)
@@ -32,6 +35,7 @@ public class JwtTokens {
                 .signWith(getSignInKey())
                 .compact();
     }
+
 
     public static JwtDTO decode(String email) {
         Claims claims = Jwts

@@ -47,11 +47,12 @@ public class ImageServiceImpl implements ImageService {
 
     /// CREATE OF THE PRODUCTS IMAGES
     @Override
-    public List<ProductImageDTO> saveImages(String productId, List<MultipartFile> files) {
-        List<ProductImageDTO> result = new ArrayList<>();
+    public List<ProductImageDTO> saveImages(UUID productId, List<MultipartFile> files) {
+        List<ProductImageEntity> result = new ArrayList<>();
+        String fullUrl = null;
         try {
             //calling product for parent link
-            ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
+            ProductEntity product = productRepository.findByStringId(productId.toString()).orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
 
             //all images through out the for loop selection
             for (MultipartFile file : files) {
@@ -73,11 +74,12 @@ public class ImageServiceImpl implements ImageService {
                 File folder = new File(folderName + "/" + pathFolder);
                 if (!folder.exists()) folder.mkdirs();
 
+                //file path and write in
                 Path path = Paths.get(folderName + "/" + pathFolder + "/" + keyUUID + "." + extension);
                 Files.write(path, file.getBytes());
 
                 //full url
-                String fullUrl = url + "/" + pathFolder + "/" + keyUUID + "." + extension;
+                fullUrl = url + "/" + pathFolder + "/" + keyUUID + "." + extension;
 
                 //creating image
                 ProductImageEntity productImage = new ProductImageEntity();
@@ -92,19 +94,19 @@ public class ImageServiceImpl implements ImageService {
                 //saved into the DATABASE
                 productImageRepository.save(productImage);
 
-                result.add(productImageMapper.toDTO(productImage, fullUrl));
+                result.add(productImage);
             }
-            return result;
+            return productImageMapper.toDTOList(result, fullUrl);
         } catch (IOException e) {
             throw new AppBadException("File saving error: " + e.getMessage());
         }
     }
 
     /// GET ALL THE PRODUCTS IMAGES
-    @Override
     @Transactional
+    @Override
     public ResponseEntity<Resource> getImage(String productId, String imageId) throws IOException {
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         ProductImageEntity img = product.getImages().stream()
                 .filter(i -> i.getImageId().equals(imageId))
@@ -132,8 +134,9 @@ public class ImageServiceImpl implements ImageService {
 
     /// DELETE THE PRODUCTS IMAGES WITHIN THE FILE
     @Transactional
+    @Override
     public void removeImage(String productId, String imageId) {
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         ProductImageEntity img = product.getImages().stream()
                 .filter(i -> i.getImageId().equals(imageId))
@@ -141,7 +144,6 @@ public class ImageServiceImpl implements ImageService {
                 .orElseThrow(() -> new IllegalArgumentException("Image not found"));
 
         product.getImages().remove(img);
-        //  product.getImages().forEach(i -> i.setSortOrder(product.getImages().indexOf(i)));
         productRepository.flush();
     }
 

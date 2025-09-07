@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cards")
@@ -17,7 +18,7 @@ import java.util.List;
 public class CardsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String cardsId;
+    private UUID cardsId;
     @Column(name = "card_name")
     private String cardName;
     @Column(name = "local_date_time")

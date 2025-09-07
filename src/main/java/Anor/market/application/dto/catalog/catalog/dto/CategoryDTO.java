@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryDTO {
 
-    private String categoryId;
+    private UUID categoryId;
     private String categoryName;
     private LocalDateTime localDateTime;
     private List<CategoryItemListDTO> categoryItemList;

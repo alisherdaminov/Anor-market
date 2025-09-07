@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "roles")
@@ -16,18 +17,17 @@ import java.time.LocalDateTime;
 public class RolesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String rolesId;
+    @Column(name = "role_id")
+    private UUID rolesId;
 
-    @Column(name = "roles")
+    @Column(name = "role_name")
     @Enumerated(EnumType.STRING)
     private Roles rolesEnum;
 
-    @Column(name = "user_roles_id")
-    private Integer rolesUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_roles", insertable = false, updatable = false)
-    private UserEntity userEntityRoles;
 
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime = LocalDateTime.now();

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class UserDTO {
     private String phoneNumber;
     private boolean isGender;
     private boolean isSeller;
-    private Roles roles;
+    private List<Roles> roles;
     private String jwtToken;
     private String refreshToken;
     private LocalDateTime createdAt;

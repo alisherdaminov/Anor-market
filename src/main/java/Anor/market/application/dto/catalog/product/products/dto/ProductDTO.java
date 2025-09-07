@@ -1,5 +1,6 @@
 package Anor.market.application.dto.catalog.product.products.dto;
 
+import Anor.market.application.dto.catalog.product.comments.dto.CommentsDTO;
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductDTO {
 
-    private String productId;
+    private UUID productId;
     private String sellerName;
     private String productName;
     private String deliveryTitle;
@@ -30,5 +32,6 @@ public class ProductDTO {
     private int discountPriceWithoutCard;
     private LocalDate deliveryDate;
     private LocalDateTime localDateTime;
+    private List<CommentsDTO> comments;
     private List<ProductImageDTO> images;
 }

@@ -2,6 +2,7 @@ package Anor.market.domain.model.entity.top_products;
 
 import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
 import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.entity.top_products.images.TopProductImageEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,9 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "topProducts")
+@Table(name = "top_products")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class TopProductsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String topProductsId;
+    private UUID topProductsId;
     @Column(name = "seller_name")
     private String sellerName;
     @Column(name = "product_name")
@@ -59,4 +61,8 @@ public class TopProductsEntity {
     //Images
     @OneToMany(mappedBy = "topProductsEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProductImageEntity> images = new ArrayList<>();
+
+    //Top Product Images
+    @OneToMany(mappedBy = "topProductsImageEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TopProductImageEntity> topProductsImageList = new ArrayList<>();
 }

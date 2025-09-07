@@ -22,7 +22,7 @@ public class BranchesMapper {
     /// ENTITY TO DTO
     public BranchesDTO toDTO(BranchesEntity entity) {
         return BranchesDTO.builder()
-                .branchId(entity.getBranchId())
+                .branchId(entity.getBranchesId())
                 .branchTitle(entity.getBranchTitle())
                 .cityName(entity.getCityName())
                 .localDateTime(entity.getLocalDateTime())

@@ -1,4 +1,4 @@
-package Anor.market.application.dto.top_products.create;
+package Anor.market.application.dto.top_products.top_products.create;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

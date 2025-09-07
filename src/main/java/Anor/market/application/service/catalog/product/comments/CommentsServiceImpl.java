@@ -45,7 +45,7 @@ public class CommentsServiceImpl implements CommentsService {
         Integer userId = SpringSecurityValid.getCurrentUser();
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AppBadException("User id not found!"));
         //products
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id not found!"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new AppBadException("Product id not found!"));
 
         // create comments
         CommentsEntity comments = commentsMapper.toEntity(createDTO);
@@ -76,7 +76,7 @@ public class CommentsServiceImpl implements CommentsService {
     /// DELETE THE COMMENTS BY ID
     @Override
     public String deleteCommentById(String commentsId) {
-        commentsRepository.deleteById(commentsId);
+        commentsRepository.deleteByCommentsId(commentsId);
         return "Deleted!";
     }
 }

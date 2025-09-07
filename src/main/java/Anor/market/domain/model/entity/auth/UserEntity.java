@@ -33,13 +33,13 @@ public class UserEntity {
     private boolean isGender;
     @Column(name = "isSeller")
     private boolean isSeller;
-    @Column(name = "local_date_time")
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
     //Roles
-    @OneToOne(mappedBy = "userEntityRoles")
-    private RolesEntity rolesEntityUser;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // One user can have many roles
+    private List<RolesEntity> roles;
 
     //Orders
     @OneToOne(mappedBy = "userEntityOrders")

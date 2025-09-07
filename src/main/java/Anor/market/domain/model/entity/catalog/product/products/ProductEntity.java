@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
@@ -26,7 +27,7 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String productId;
+    private UUID productId;
     @Column(name = "seller_name")
     private String sellerName;
     @Column(name = "product_name")

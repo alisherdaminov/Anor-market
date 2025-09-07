@@ -1,9 +1,10 @@
 package Anor.market.domain.service.auth;
 
 
+import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.shared.enums.Roles;
 
 public interface RolesService {
 
-    void createRole(Integer userId, Roles roles);
+    void createRole(UserEntity userId, Roles roles);
 }

@@ -1,16 +1,17 @@
 package Anor.market.application.mapper.top_products;
 
-import Anor.market.application.dto.top_products.create.TopProductsCreateDTO;
-import Anor.market.application.dto.top_products.dto.TopProductsDTO;
-import Anor.market.application.dto.top_products.update.TopProductsUpdateDTO;
+import Anor.market.application.dto.top_products.top_products.create.TopProductsCreateDTO;
+import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
+import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
 import Anor.market.domain.model.entity.top_products.TopProductsEntity;
-import Anor.market.shared.exceptions.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class TopProductsMapper {
@@ -28,7 +29,7 @@ public class TopProductsMapper {
     }
 
     /// DTO TO ENTITY
-    public TopProductsEntity toEntityUpdate(String topProductsId, TopProductsUpdateDTO createDTO) {
+    public TopProductsEntity toEntityUpdate(UUID topProductsId, TopProductsUpdateDTO createDTO) {
         return TopProductsEntity.builder()
                 .topProductsId(topProductsId)
                 .sellerName(createDTO.getSellerName())
@@ -69,7 +70,7 @@ public class TopProductsMapper {
                 .localDateTime(entity.getLocalDateTime())
                 .isTopProductStartDate(entity.getIsTopProductStartDate())
                 .isTopProductEndDate(entity.getIsTopProductEndDate())
-                .images(productImageMapper.topProductsImageList(entity))
+                .images(Optional.ofNullable(productImageMapper.topProductsImageList(entity)).orElse(Collections.emptyList()))
                 .build();
     }
 }

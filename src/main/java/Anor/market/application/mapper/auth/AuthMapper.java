@@ -3,6 +3,7 @@ package Anor.market.application.mapper.auth;
 import Anor.market.application.dto.auth.create.UserCreatedDTO;
 import Anor.market.application.dto.auth.dto.UserDTO;
 import Anor.market.application.service.auth.RefreshTokenServiceImpl;
+import Anor.market.domain.model.entity.auth.RolesEntity;
 import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.domain.repository.auth.RolesRepository;
 import Anor.market.infrastucture.config.validation.JwtTokens;
@@ -12,6 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthMapper {
@@ -33,7 +38,7 @@ public class AuthMapper {
                 .phoneNumber(userCreatedDTO.getPhoneNumber())
                 .isGender(userCreatedDTO.isGender())
                 .isSeller(userCreatedDTO.isSeller())
-                .localDateTime(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 
@@ -48,13 +53,23 @@ public class AuthMapper {
                 .phoneNumber(userCreatedDTO.getPhoneNumber())
                 .isGender(userCreatedDTO.isGender())
                 .isSeller(userCreatedDTO.isSeller())
-                .localDateTime(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 
     /// ENTITY TO DTO
     public UserDTO toDTO(UserEntity user) {
-        Roles roles = rolesRepository.findByRoles(user.getUserId());
+        List<Roles> rolesList = Optional.ofNullable(rolesRepository.findAllByUserId(user.getUserId()))
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(role -> Roles.valueOf(role.name()))
+                .collect(Collectors.toList());
+        if (rolesList.isEmpty()) {
+            rolesList = Collections.singletonList(Roles.USER); // default role
+        }
+        String jwt = JwtTokens.encode(user.getEmail(), user.getUserId(), rolesList);
+        String refresh = refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken();
+
         return UserDTO.builder()
                 .userId(user.getUserId())
                 .lastName(user.getLastName())
@@ -63,12 +78,14 @@ public class AuthMapper {
                 .phoneNumber(user.getPhoneNumber())
                 .isGender(user.isGender())
                 .isSeller(user.isSeller())
-                .roles(roles)
-                .jwtToken(JwtTokens.encode(user.getEmail(), user.getUserId(), roles))
-                .refreshToken(refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken())
-                .createdAt(user.getLocalDateTime())
+                .roles(rolesList)
+                .jwtToken(jwt)
+                .refreshToken(refresh)
+                .createdAt(user.getCreatedAt())
                 .build();
+
     }
+
 
 
 }

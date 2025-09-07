@@ -1,0 +1,13 @@
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    last_name VARCHAR(100) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(50) UNIQUE,
+    is_gender BOOLEAN NOT NULL DEFAULT FALSE,
+    is_seller BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+

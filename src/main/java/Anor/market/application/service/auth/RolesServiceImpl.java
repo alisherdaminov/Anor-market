@@ -1,6 +1,7 @@
 package Anor.market.application.service.auth;
 
 import Anor.market.domain.model.entity.auth.RolesEntity;
+import Anor.market.domain.model.entity.auth.UserEntity;
 import Anor.market.domain.repository.auth.RolesRepository;
 import Anor.market.domain.service.auth.RolesService;
 import Anor.market.shared.enums.Roles;
@@ -20,9 +21,9 @@ public class RolesServiceImpl implements RolesService {
 
     /// CREATE A ROLE
     @Override
-    public void createRole(Integer userId, Roles roles) {
+    public void createRole(UserEntity userId, Roles roles) {
         RolesEntity rolesEntity = new RolesEntity();
-        rolesEntity.setRolesUserId(userId);
+        rolesEntity.setUser(userId);
         rolesEntity.setRolesEnum(roles);
         rolesEntity.setLocalDateTime(LocalDateTime.now());
         rolesRepository.save(rolesEntity);

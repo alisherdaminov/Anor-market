@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentsDTO {
 
-    private String commentsId;
+    private UUID commentsId;
     private String commentersName;
     private String productDescription;
     private String advantageOfProduct;

@@ -28,7 +28,7 @@ public class OrdersMapper {
     public OrdersDTO toDTO(OrdersEntity entity) {
         return OrdersDTO.builder()
                 .ordersId(entity.getOrdersId())
-                .branchTitle(entity.getBranchTitle())
+                .branchTitle(entity.getBranchTitleOrders())
                 .consumerName(entity.getConsumerName())
                 .consumerPhoneNumber(entity.getConsumerPhoneNumber())
                 .deliveryTitle(entity.getDeliveryTitle())

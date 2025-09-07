@@ -1,9 +1,9 @@
 package Anor.market.presentation.controller.top_products;
 
-import Anor.market.application.dto.top_products.create.TopProductsCreateDTO;
-import Anor.market.application.dto.top_products.dto.TopProductsDTO;
-import Anor.market.application.dto.top_products.update.TopProductsUpdateDTO;
-import Anor.market.application.service.top_products.TopProductsServiceImpl;
+import Anor.market.application.dto.top_products.top_products.create.TopProductsCreateDTO;
+import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
+import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
+import Anor.market.application.service.top_products.top_products.TopProductsServiceImpl;
 import Anor.market.presentation.response.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/top-products")
@@ -34,14 +35,14 @@ public class TopProducts {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{topProductsId}")
-    public ResponseEntity<AppResponse<TopProductsDTO>> getTopProductsById(@PathVariable("topProductsId") String topProductsId) {
+    public ResponseEntity<AppResponse<TopProductsDTO>> getTopProductsById(@PathVariable("topProductsId") UUID topProductsId) {
         return ResponseEntity.ok().body(new AppResponse<>(service.getTopProductsById(topProductsId), "success", new Date()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{topProductsId}")
     public ResponseEntity<AppResponse<TopProductsDTO>> updateTopProducts(
-            @PathVariable("topProductsId") String topProductsId,
+            @PathVariable("topProductsId") UUID topProductsId,
             @RequestBody TopProductsUpdateDTO createDTO) {
         return ResponseEntity.ok().body(new AppResponse<>(service.updateTopProducts(topProductsId, createDTO), "success", new Date()));
     }

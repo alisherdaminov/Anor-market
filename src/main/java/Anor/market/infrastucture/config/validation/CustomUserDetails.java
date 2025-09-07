@@ -23,9 +23,9 @@ public class CustomUserDetails implements UserDetails {
     private String phoneNumber;
     private boolean isGender;
     private boolean isSeller;
-    private GrantedAuthority authority;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(UserEntity user, Roles roles) {
+    public CustomUserDetails(UserEntity user, List<Roles> roles) {
         this.userId = user.getUserId();
         this.lastName = user.getLastName();
         this.firstName = user.getFirstName();
@@ -34,12 +34,12 @@ public class CustomUserDetails implements UserDetails {
         this.phoneNumber = user.getPhoneNumber();
         this.isGender = user.isGender();
         this.isSeller = user.isSeller();
-        this.authority = new SimpleGrantedAuthority(roles.name());
+        this.authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.name())).toList();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(authority);
+        return authorities;
     }
 
     @Override

@@ -111,21 +111,21 @@ public class CatalogServiceImpl implements CatalogService {
     /// GET CATEGORY BY ID
     @Override
     public CategoryDTO getCategoryById(String categoryId) {
-        CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new AppBadException("Category id is not found!"));
+        CategoryEntity category = categoryRepository.findByStringId(categoryId).orElseThrow(() -> new AppBadException("Category id is not found!"));
         return catalogMapper.toCategoryDTO(category);
     }
 
     /// GET CATEGORY ITEM LIST BY ID
     @Override
     public CategoryItemListDTO getCategoryItemListById(String categoryItemListId) {
-        CategoryItemListEntity categoryItemList = categoryItemListRepository.findById(categoryItemListId).orElseThrow(() -> new AppBadException("Category item list id is not found!"));
+        CategoryItemListEntity categoryItemList = categoryItemListRepository.findByStringId(categoryItemListId).orElseThrow(() -> new AppBadException("Category item list id is not found!"));
         return catalogMapper.toCategoryItemListDTO(categoryItemList);
     }
 
     /// GET PRODUCT BY ID
     @Override
     public ProductDTO getProductById(String productId) {
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
         return productMapper.toProductDTO(product);
     }
 
@@ -141,9 +141,9 @@ public class CatalogServiceImpl implements CatalogService {
         }
 
         /// CATALOG ENTITY DATABASE SEARCH BY ID
-        CatalogEntity catalog = catalogRepository.findById(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
+        CatalogEntity catalog = catalogRepository.findByStringId(catalogId).orElseThrow(() -> new AppBadException("Catalog id is not found!"));
         /// PRODUCT ENTITY DATABASE SEARCH BY ID
-        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
+        ProductEntity product = productRepository.findByStringId(productId).orElseThrow(() -> new AppBadException("Product id is not found!"));
 
         /// CATALOG ENTITY
         CatalogEntity catalogEntity = catalogUpdateMapper.toUpdateCatalogEntity(catalog.getCatalogId(), product.getProductId(), createDTO);
@@ -180,28 +180,28 @@ public class CatalogServiceImpl implements CatalogService {
     ///  DELETE THE CATALOG BY USING CATALOG ID
     @Override
     public String deleteCatalog(String catalogId) {
-        catalogRepository.deleteById(catalogId);
+        catalogRepository.deleteByCatalogId(catalogId);
         return "Deleted!";
     }
 
     ///  DELETE THE CATEGORY BY USING CATEGORY ID
     @Override
     public String deleteCategory(String categoryId) {
-        categoryRepository.deleteById(categoryId);
+        categoryRepository.deleteByCategoryId(categoryId);
         return "Deleted!";
     }
 
     ///  DELETE THE CATEGORY ITEM LIST BY USING CATEGORY ITEM LIST ID
     @Override
     public String deleteCategoryItemList(String categoryItemListId) {
-        categoryItemListRepository.deleteById(categoryItemListId);
+        categoryItemListRepository.deleteByCategoryItemListId(categoryItemListId);
         return "Deleted!";
     }
 
     ///  DELETE THE PRODUCT BY USING PRODUCT ID
     @Override
     public String deleteProduct(String productId) {
-        productRepository.deleteById(productId);
+        productRepository.deleteByProductId(productId);
         return "Deleted!";
     }
 }

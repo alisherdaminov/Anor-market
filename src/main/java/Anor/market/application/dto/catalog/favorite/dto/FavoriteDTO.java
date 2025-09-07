@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FavoriteDTO {
 
-    private String favoriteId;
+    private UUID favoriteId;
     private ProductDTO productDTO;
     private LocalDateTime localDateTime;
 }

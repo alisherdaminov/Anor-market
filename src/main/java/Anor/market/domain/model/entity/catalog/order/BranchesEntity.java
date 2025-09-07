@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "branch")
@@ -18,7 +19,8 @@ public class BranchesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String branchId;
+    @Column(name = "branches_id")
+    private UUID branchesId;
     @Column(name = "branch_title")
     private String branchTitle;
     @Column(name = "city_name")

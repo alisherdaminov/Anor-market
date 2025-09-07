@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "carts")
@@ -17,7 +18,7 @@ public class CartEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String cartId;
+    private UUID cartId;
     @Column(name = "quantity_of_product")
     private int quantityOfProduct;
     @Column(name = "local_date_time")
@@ -25,7 +26,7 @@ public class CartEntity {
 
     //Products
     @Column(name = "products_cart_id")
-    private String productId;
+    private UUID productId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "products_cart_id", insertable = false, updatable = false)

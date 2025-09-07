@@ -52,7 +52,7 @@ public class BranchServiceImpl implements BranchesService {
         if (SpringSecurityValid.hasRole(Roles.USER) && SpringSecurityValid.hasRole(Roles.SELLER)) {
             throw new AppBadException("You do not have any permission to make a branch of Anor market!");
         }
-        BranchesEntity branches = branchesRepository.findById(branchId).orElseThrow(() -> new AppBadException("Branch id is not found!"));
+        BranchesEntity branches = branchesRepository.findByStringId(branchId).orElseThrow(() -> new AppBadException("Branch id is not found!"));
         branches.setBranchTitle(createDTO.getBranchTitle());
         branches.setCityName(createDTO.getCityName());
         branchesRepository.save(branches);
@@ -62,7 +62,7 @@ public class BranchServiceImpl implements BranchesService {
     /// DELETE BRANCH DATA BY BRANCH ID
     @Override
     public String deleteBranchById(String branchId) {
-        branchesRepository.deleteById(branchId);
+        branchesRepository.deleteByBranchesId(branchId);
         return "Deleted!";
     }
 }

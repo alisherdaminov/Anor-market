@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "categories")
@@ -17,7 +18,7 @@ public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String categoryId;
+    private UUID categoryId;
     @Column(name = "category_name")
     private String categoryName;
     @Column(name = "local_date_time")

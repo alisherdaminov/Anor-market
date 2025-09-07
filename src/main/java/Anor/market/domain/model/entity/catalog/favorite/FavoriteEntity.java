@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "favorites")
@@ -17,13 +18,13 @@ public class FavoriteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String favoriteId;
+    private UUID favoriteId;
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime = LocalDateTime.now();
 
     //Products
     @Column(name = "products_favorite_id")
-    private String productId;
+    private UUID productId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "products_favorite_id", insertable = false, updatable = false)

@@ -5,18 +5,24 @@ import Anor.market.application.dto.auth.dto.UserDTO;
 import Anor.market.application.service.auth.AuthServiceImpl;
 import Anor.market.application.service.auth.RefreshTokenServiceImpl;
 import Anor.market.domain.model.entity.auth.RefreshTokenEntity;
+import Anor.market.domain.model.entity.auth.RolesEntity;
 import Anor.market.infrastucture.config.validation.JwtTokens;
 import Anor.market.presentation.request.LoginCreatedDTO;
 import Anor.market.presentation.request.LogoutRequest;
 import Anor.market.presentation.request.RefreshTokenRequest;
 import Anor.market.presentation.response.AppResponse;
+import Anor.market.shared.enums.Roles;
 import Anor.market.shared.exceptions.AppBadException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -51,12 +57,24 @@ public class Auth {
         String refreshToken = request.getRefreshTokenRequest();
 
         // refresh token is valid still
-        RefreshTokenEntity entity = refreshTokenService.findByToken(refreshToken).map(refreshTokenService::isValidToken)
+        RefreshTokenEntity entity = refreshTokenService.findByToken(refreshToken)
+                .map(refreshTokenService::isValidToken)
                 .orElseThrow(() -> new AppBadException("Refresh token is not found!"));
 
+        // roles list
+        List<Roles> roles = Optional.ofNullable(entity.getUser().getRoles())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(RolesEntity::getRolesEnum)
+                .collect(Collectors.toList());
+
         // generating new token
-        String generatedToken = JwtTokens.encode(entity.getUser().getEmail(), entity.getUser().getUserId(),
-                entity.getUser().getRolesEntityUser().getRolesEnum());
+        String generatedToken = JwtTokens.encode(
+                entity.getUser().getEmail(),
+                entity.getUser().getUserId(),
+                roles
+        );
+
         return ResponseEntity.ok().body(new AppResponse<>(generatedToken, "success", new Date()));
     }
 
