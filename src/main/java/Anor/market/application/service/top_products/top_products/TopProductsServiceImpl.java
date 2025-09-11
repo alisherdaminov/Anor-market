@@ -4,9 +4,9 @@ import Anor.market.application.dto.top_products.top_products.create.TopProductsC
 import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
 import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
 import Anor.market.application.mapper.top_products.TopProductsMapper;
-import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
-import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
-import Anor.market.domain.model.entity.top_products.TopProductsEntity;
+import Anor.market.domain.model.catalog.product.images.ProductImageEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.top_products.TopProductsEntity;
 import Anor.market.domain.repository.catalog.product.products.ProductRepository;
 import Anor.market.domain.repository.top_products.TopProductsRepository;
 import Anor.market.domain.service.Top_products.TopProductsService;

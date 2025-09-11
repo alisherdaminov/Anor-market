@@ -2,7 +2,7 @@ package Anor.market.application.mapper.catalog.order;
 
 import Anor.market.application.dto.catalog.order.cards.CardsDTO;
 import Anor.market.application.dto.catalog.order.cards.create.CardsCreateDTO;
-import Anor.market.domain.model.entity.catalog.order.CardsEntity;
+import Anor.market.domain.model.catalog.order.CardsEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

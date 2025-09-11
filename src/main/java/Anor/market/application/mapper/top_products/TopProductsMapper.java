@@ -4,7 +4,7 @@ import Anor.market.application.dto.top_products.top_products.create.TopProductsC
 import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
 import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
-import Anor.market.domain.model.entity.top_products.TopProductsEntity;
+import Anor.market.domain.model.top_products.TopProductsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

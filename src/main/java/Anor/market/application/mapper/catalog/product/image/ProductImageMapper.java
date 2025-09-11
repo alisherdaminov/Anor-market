@@ -1,9 +1,10 @@
 package Anor.market.application.mapper.catalog.product.image;
 
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
-import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
-import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
-import Anor.market.domain.model.entity.top_products.TopProductsEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.catalog.product.images.ProductImageEntity;
+import Anor.market.domain.model.home.home_product.HomeProductsEntity;
+import Anor.market.domain.model.top_products.TopProductsEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -58,6 +59,22 @@ public class ProductImageMapper {
     /// ENTITY TO DTO LIST
     public List<ProductImageDTO> topProductsImageList(TopProductsEntity productEntity) {
         return Optional.ofNullable(productEntity.getImages())
+                .orElse(Collections.emptyList())
+                .stream()
+                .sorted(Comparator.comparing(ProductImageEntity::getCreatedAt).reversed())
+                .map(productImageEntity -> new ProductImageDTO(
+                        productImageEntity.getImageId(),
+                        productImageEntity.getOrigenName(),
+                        productImageEntity.getExtension(),
+                        productImageEntity.getPath(),
+                        productImageEntity.getSize(),
+                        productImageEntity.getUrl(),
+                        productImageEntity.getCreatedAt()))
+                .toList();
+    }
+    /// ENTITY TO DTO LIST
+    public List<ProductImageDTO> homeProductsList(HomeProductsEntity homeProducts) {
+        return Optional.ofNullable(homeProducts.getProductImages())
                 .orElse(Collections.emptyList())
                 .stream()
                 .sorted(Comparator.comparing(ProductImageEntity::getCreatedAt).reversed())

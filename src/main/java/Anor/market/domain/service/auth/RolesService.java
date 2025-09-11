@@ -1,7 +1,7 @@
 package Anor.market.domain.service.auth;
 
 
-import Anor.market.domain.model.entity.auth.UserEntity;
+import Anor.market.domain.model.auth.UserEntity;
 import Anor.market.shared.enums.Roles;
 
 public interface RolesService {

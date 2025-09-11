@@ -1,0 +1,6 @@
+
+CREATE TABLE homes (
+    home_id UUID PRIMARY KEY,
+    home_title VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

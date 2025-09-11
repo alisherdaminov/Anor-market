@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.catalog;
 
-import Anor.market.domain.model.entity.catalog.catalog.CatalogEntity;
+import Anor.market.domain.model.catalog.catalog.CatalogEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

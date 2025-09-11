@@ -1,0 +1,10 @@
+
+
+ALTER TABLE product_images
+ADD COLUMN home_products_image_id UUID;
+
+ALTER TABLE product_images
+ADD CONSTRAINT fk_home_products_image
+FOREIGN KEY (home_products_image_id)
+REFERENCES home_products(product_id)
+ON DELETE CASCADE;

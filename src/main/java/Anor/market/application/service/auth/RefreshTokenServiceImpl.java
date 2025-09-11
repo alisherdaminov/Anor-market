@@ -1,7 +1,7 @@
 package Anor.market.application.service.auth;
 
-import Anor.market.domain.model.entity.auth.RefreshTokenEntity;
-import Anor.market.domain.model.entity.auth.UserEntity;
+import Anor.market.domain.model.auth.RefreshTokenEntity;
+import Anor.market.domain.model.auth.UserEntity;
 import Anor.market.domain.repository.auth.RefreshTokenRepository;
 import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.domain.service.auth.RefreshTokenService;

@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.product.comments;
 
-import Anor.market.domain.model.entity.catalog.product.comments.CommentsEntity;
+import Anor.market.domain.model.catalog.product.comments.CommentsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

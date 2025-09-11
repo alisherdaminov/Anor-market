@@ -1,5 +1,5 @@
 
-CREATE TABLE refresh_tokens (
+CREATE TABLE refresh_token (
     refresh_token_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     refresh_token TEXT NOT NULL UNIQUE,
     expiry_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,

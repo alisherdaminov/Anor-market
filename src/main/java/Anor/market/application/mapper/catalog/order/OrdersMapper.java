@@ -2,7 +2,7 @@ package Anor.market.application.mapper.catalog.order;
 
 import Anor.market.application.dto.catalog.order.orders.create.OrdersCreateDTO;
 import Anor.market.application.dto.catalog.order.orders.dto.OrdersDTO;
-import Anor.market.domain.model.entity.catalog.order.OrdersEntity;
+import Anor.market.domain.model.catalog.order.OrdersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

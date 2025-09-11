@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.catalog;
 
-import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
+import Anor.market.domain.model.catalog.catalog.CategoryItemListEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

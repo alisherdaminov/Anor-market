@@ -1,6 +1,6 @@
 package Anor.market.domain.service.auth;
 
-import Anor.market.domain.model.entity.auth.RefreshTokenEntity;
+import Anor.market.domain.model.auth.RefreshTokenEntity;
 
 import java.util.Optional;
 

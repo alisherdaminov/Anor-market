@@ -4,12 +4,12 @@ import Anor.market.application.dto.catalog.product.products.create.ProductCreate
 import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import Anor.market.application.mapper.catalog.product.comments.CommentsMapper;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
-import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -72,6 +72,7 @@ public class ProductMapper {
 
     /// ENTITY TO DTO
     public ProductDTO toProductDTO(ProductEntity productEntity) {
+
         return ProductDTO.builder()
                 .productId(productEntity.getProductId())
                 .sellerName(productEntity.getSellerName())
@@ -86,10 +87,14 @@ public class ProductMapper {
                 .discountPriceWithoutCard(productEntity.getDiscountPriceWithoutCard())
                 .deliveryDate(productEntity.getDeliveryDate())
                 .localDateTime(productEntity.getLocalDateTime())
-                .comments(productEntity.getCommentsEntityList()
-                        .stream()
-                        .map(commentsMapper::toDTO)
-                        .collect(Collectors.toList()))
+                .comments(
+                        productEntity.getCommentsEntityList() != null
+                                ? productEntity.getCommentsEntityList()
+                                .stream()
+                                .map(commentsMapper::toDTO)
+                                .collect(Collectors.toList())
+                                : Collections.emptyList()
+                )
                 .images(productImageMapper.productImageDTOList(productEntity))
                 .build();
     }

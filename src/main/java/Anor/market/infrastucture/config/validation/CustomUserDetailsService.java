@@ -1,6 +1,6 @@
 package Anor.market.infrastucture.config.validation;
 
-import Anor.market.domain.model.entity.auth.UserEntity;
+import Anor.market.domain.model.auth.UserEntity;
 import Anor.market.domain.repository.auth.RolesRepository;
 import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.shared.enums.Roles;

@@ -3,7 +3,7 @@ package Anor.market.application.mapper.catalog.favorite;
 import Anor.market.application.dto.catalog.favorite.create.FavoriteCreateDTO;
 import Anor.market.application.dto.catalog.favorite.dto.FavoriteDTO;
 import Anor.market.application.mapper.catalog.product.products.ProductMapper;
-import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
+import Anor.market.domain.model.catalog.favorite.FavoriteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,7 @@ public class FavoriteMapper {
 
         return FavoriteDTO.builder()
                 .favoriteId(favoriteEntity.getFavoriteId())
-                .productDTO(productMapper.toProductDTO(favoriteEntity.getProductEntityFavorite()))
+               // .productDTO(productMapper.toProductDTO(favoriteEntity.getProductEntityFavorite()))
                 .localDateTime(favoriteEntity.getLocalDateTime())
                 .build();
     }

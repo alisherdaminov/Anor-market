@@ -4,9 +4,9 @@ import Anor.market.application.dto.catalog.product.products.create.ProductCreate
 import Anor.market.application.dto.catalog.product.products.dto.ProductDTO;
 import Anor.market.application.mapper.catalog.product.products.ProductMapper;
 import Anor.market.application.service.catalog.product.images.ImageServiceImpl;
-import Anor.market.domain.model.entity.auth.UserEntity;
-import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
-import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.auth.UserEntity;
+import Anor.market.domain.model.catalog.catalog.CategoryItemListEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
 import Anor.market.domain.repository.auth.UserRepository;
 import Anor.market.domain.repository.catalog.catalog.CategoryItemListRepository;
 import Anor.market.domain.repository.catalog.product.products.ProductRepository;
@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**

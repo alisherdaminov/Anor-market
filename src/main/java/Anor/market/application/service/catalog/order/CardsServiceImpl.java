@@ -3,7 +3,7 @@ package Anor.market.application.service.catalog.order;
 import Anor.market.application.dto.catalog.order.cards.CardsDTO;
 import Anor.market.application.dto.catalog.order.cards.create.CardsCreateDTO;
 import Anor.market.application.mapper.catalog.order.CardsMapper;
-import Anor.market.domain.model.entity.catalog.order.CardsEntity;
+import Anor.market.domain.model.catalog.order.CardsEntity;
 import Anor.market.domain.repository.catalog.order.CardsRepository;
 import Anor.market.domain.service.catalog.order.CardService;
 import Anor.market.infrastucture.config.validation.SpringSecurityValid;

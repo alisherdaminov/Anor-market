@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.order;
 
-import Anor.market.domain.model.entity.catalog.order.BranchesEntity;
+import Anor.market.domain.model.catalog.order.BranchesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
 package Anor.market.infrastucture.config.validation;
 
-import Anor.market.domain.model.entity.auth.UserEntity;
+import Anor.market.domain.model.auth.UserEntity;
 import Anor.market.shared.enums.Roles;
 import lombok.Getter;
 import lombok.Setter;

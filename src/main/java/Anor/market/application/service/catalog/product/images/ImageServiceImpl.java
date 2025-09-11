@@ -2,8 +2,8 @@ package Anor.market.application.service.catalog.product.images;
 
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
-import Anor.market.domain.model.entity.catalog.product.products.ProductEntity;
-import Anor.market.domain.model.entity.catalog.product.images.ProductImageEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
+import Anor.market.domain.model.catalog.product.images.ProductImageEntity;
 import Anor.market.domain.repository.catalog.product.products.ProductRepository;
 import Anor.market.domain.repository.catalog.product.image.ProductImageRepository;
 import Anor.market.domain.service.catalog.product.images.ImageService;
@@ -67,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
 
                 //extensions
                 String pathFolder = LocalDate.now().toString();
-                String keyUUID = UUID.randomUUID().toString();
+                UUID keyUUID = UUID.randomUUID();
                 String extension = getExtension(Objects.requireNonNull(file.getOriginalFilename()));
 
                 //creating folder

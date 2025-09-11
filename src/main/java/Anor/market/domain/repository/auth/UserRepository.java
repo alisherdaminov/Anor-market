@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.auth;
 
-import Anor.market.domain.model.entity.auth.UserEntity;
+import Anor.market.domain.model.auth.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

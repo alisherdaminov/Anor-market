@@ -2,7 +2,7 @@ package Anor.market.application.mapper.catalog.product.comments;
 
 import Anor.market.application.dto.catalog.product.comments.create.CommentsCreateDTO;
 import Anor.market.application.dto.catalog.product.comments.dto.CommentsDTO;
-import Anor.market.domain.model.entity.catalog.product.comments.CommentsEntity;
+import Anor.market.domain.model.catalog.product.comments.CommentsEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

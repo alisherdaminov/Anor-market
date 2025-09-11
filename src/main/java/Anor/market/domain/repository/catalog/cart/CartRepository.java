@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.cart;
 
-import Anor.market.domain.model.entity.catalog.cart.CartEntity;
+import Anor.market.domain.model.catalog.cart.CartEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

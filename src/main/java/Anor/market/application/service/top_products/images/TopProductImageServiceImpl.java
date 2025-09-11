@@ -2,7 +2,7 @@ package Anor.market.application.service.top_products.images;
 
 import Anor.market.application.dto.top_products.images.TopProductImageDTO;
 import Anor.market.application.mapper.top_products.images.TopProductImageMapper;
-import Anor.market.domain.model.entity.top_products.images.TopProductImageEntity;
+import Anor.market.domain.model.top_products.images.TopProductImageEntity;
 import Anor.market.domain.repository.top_products.TopProductsRepository;
 import Anor.market.domain.repository.top_products.images.TopProductsImageRepository;
 import Anor.market.domain.service.Top_products.images.TopProductImageService;
@@ -63,7 +63,7 @@ public class TopProductImageServiceImpl implements TopProductImageService {
 
             //extensions
             String pathFolder = LocalDate.now().toString();
-            String keyUUID = UUID.randomUUID().toString();
+            UUID keyUUID = UUID.randomUUID();
             String extension = getExtension(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
             //creating folder

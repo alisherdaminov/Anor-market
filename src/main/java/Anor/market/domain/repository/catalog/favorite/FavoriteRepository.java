@@ -1,6 +1,6 @@
 package Anor.market.domain.repository.catalog.favorite;
 
-import Anor.market.domain.model.entity.catalog.favorite.FavoriteEntity;
+import Anor.market.domain.model.catalog.favorite.FavoriteEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

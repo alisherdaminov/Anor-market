@@ -7,9 +7,9 @@ import Anor.market.application.dto.catalog.catalog.dto.CatalogDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryDTO;
 import Anor.market.application.dto.catalog.catalog.dto.CategoryItemListDTO;
 import Anor.market.application.mapper.catalog.product.products.ProductMapper;
-import Anor.market.domain.model.entity.catalog.catalog.CatalogEntity;
-import Anor.market.domain.model.entity.catalog.catalog.CategoryEntity;
-import Anor.market.domain.model.entity.catalog.catalog.CategoryItemListEntity;
+import Anor.market.domain.model.catalog.catalog.CatalogEntity;
+import Anor.market.domain.model.catalog.catalog.CategoryEntity;
+import Anor.market.domain.model.catalog.catalog.CategoryItemListEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
