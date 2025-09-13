@@ -63,9 +63,9 @@ public class AuthMapper {
                 .stream()
                 .map(role -> Roles.valueOf(role.name()))
                 .collect(Collectors.toList());
-        if (rolesList.isEmpty()) {
-            rolesList = Collections.singletonList(Roles.USER); // default role
-        }
+//        if (rolesList.isEmpty()) {
+//            rolesList = Collections.singletonList(Roles.USER); // default role
+//        }
         String jwt = JwtTokens.encode(user.getEmail(), user.getUserId(), rolesList);
         String refresh = refreshTokenService.createRefreshToken(user.getUserId()).getRefreshToken();
 

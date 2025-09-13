@@ -43,6 +43,7 @@ public class SpringConfig {
         return authenticationProvider;
     }
 
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

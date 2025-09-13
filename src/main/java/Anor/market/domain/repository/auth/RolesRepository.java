@@ -15,8 +15,10 @@ import java.util.UUID;
 @Repository
 public interface RolesRepository extends JpaRepository<RolesEntity, UUID> {
 
-    @Query("SELECT r FROM RolesEntity r WHERE r.user.userId = :userId")
+
+    @Query("SELECT r.rolesEnum FROM RolesEntity r WHERE r.user.userId = :userId")
     List<Roles> findAllByUserId(@Param("userId") Integer userId);
+
 
     @Transactional
     @Modifying

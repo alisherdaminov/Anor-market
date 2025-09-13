@@ -1,12 +1,16 @@
 package Anor.market.application.service.home;
 
 import Anor.market.application.dto.home.create.HomeCreateDTO;
+import Anor.market.application.dto.home.create.HomeTitleCreateDTO;
 import Anor.market.application.dto.home.dto.HomeDTO;
 import Anor.market.application.dto.home.home_product.HomeProductsDTO;
 import Anor.market.application.mapper.home.HomeMapper;
 import Anor.market.application.mapper.home.home_product.HomeProductsMapper;
+import Anor.market.domain.model.catalog.product.images.ProductImageEntity;
+import Anor.market.domain.model.catalog.product.products.ProductEntity;
 import Anor.market.domain.model.home.HomeEntity;
 import Anor.market.domain.model.home.home_product.HomeProductsEntity;
+import Anor.market.domain.repository.catalog.product.products.ProductRepository;
 import Anor.market.domain.repository.home.HomeRepository;
 import Anor.market.domain.repository.home.home_product.HomeProductsRepository;
 import Anor.market.domain.service.home.HomeService;
@@ -15,15 +19,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class HomeServiceImpl implements HomeService {
 
 
+    @Autowired
+    private ProductRepository productRepository;
     @Autowired
     private HomeRepository homeRepository;
     @Autowired
@@ -36,19 +43,55 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public HomeDTO createHome(HomeCreateDTO homeCreateDTO) {
+
         HomeEntity homeEntity = homeMapper.toEntity(homeCreateDTO);
-        HomeEntity homeSaved = homeRepository.save(homeEntity);
-        return homeMapper.toDTO(homeSaved);
+
+        List<ProductEntity> products = productRepository.findAll();
+
+        if (products.isEmpty()) {
+            throw new AppBadException("Products not found in database!");
+        }
+        List<HomeProductsEntity> homeProductsList = products.stream().map(product -> {
+                    HomeProductsEntity homeProduct = new HomeProductsEntity();
+                    //homeProduct.setHomeEntity(homeEntity);
+                    product.getImages().forEach(image -> image.setHomeProductsEntity(homeProduct));
+                    homeProduct.setSellerName(product.getSellerName());
+                    homeProduct.setProductName(product.getProductName());
+                    homeProduct.setDeliveryTitle(product.getDeliveryTitle());
+                    homeProduct.setProductDescription(product.getProductDescription());
+                    homeProduct.setProductColor(product.getProductColor());
+                    homeProduct.setPrice(product.getPrice());
+                    homeProduct.setDiscountWithCardPercent(product.getDiscountWithCardPercent());
+                    homeProduct.setDiscountPriceWithCard(product.getDiscountPriceWithCard());
+                    homeProduct.setDiscountWithoutCardPercent(product.getDiscountWithoutCardPercent());
+                    homeProduct.setDiscountPriceWithoutCard(product.getDiscountPriceWithoutCard());
+                    homeProduct.setDeliveryDate(product.getDeliveryDate());
+                    homeProduct.setCreatedAt(LocalDateTime.now());
+                    return homeProduct;
+                }).sorted(Comparator
+                        .comparing(HomeProductsEntity::getPrice)
+                        .thenComparing(HomeProductsEntity::getDiscountWithCardPercent)
+                        .thenComparing(HomeProductsEntity::getCreatedAt))
+                .toList();
+        //saved into the DATABASE
+        homeProductsRepository.saveAll(homeProductsList);
+
+        homeEntity.setHomeProductsEntityList(homeProductsList);
+
+        //saved into the DATABASE
+        homeRepository.save(homeEntity);
+        // to DTO
+        return homeMapper.toDTO(homeEntity);
     }
 
     @Override
-    public List<HomeProductsDTO> getAllProductsById(String homeTitleId, HomeCreateDTO homeCreateDTO) {
+    public List<HomeProductsDTO> getAllProductsById(String homeTitleId, HomeTitleCreateDTO homeTitleCreateDTO) {
 
         HomeEntity homeEntity = homeRepository.findByStringId(homeTitleId).orElseThrow(() -> new AppBadException("Home title id not found!"));
 
         List<HomeProductsEntity> products = homeProductsRepository.findByHomeEntity_HomeId(homeEntity.getHomeId());
 
-        Comparator<HomeProductsEntity> comparator = switch (homeCreateDTO.getHomeTitle().toLowerCase()) {
+        Comparator<HomeProductsEntity> comparator = switch (homeTitleCreateDTO.getHomeTitle().toLowerCase()) {
             case "price" -> Comparator.comparing(HomeProductsEntity::getPrice);
             case "discount" -> Comparator.comparing(HomeProductsEntity::getDiscountWithCardPercent);
             case "created" -> Comparator.comparing(HomeProductsEntity::getCreatedAt);
@@ -67,17 +110,22 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public HomeDTO updateHome(UUID homeId, HomeCreateDTO homeCreateDTO) {
-        return null;
+    public HomeDTO updateHome(String homeId, HomeCreateDTO homeCreateDTO) {
+        HomeEntity home = homeRepository.findByStringId(homeId).orElseThrow(() -> new AppBadException("Home title id not found!"));
+        HomeEntity homeEntity = homeMapper.toUpdateEntity(home.getHomeId(), homeCreateDTO);
+        homeRepository.save(homeEntity);
+        return homeMapper.toDTO(homeEntity);
     }
 
     @Override
-    public void deleteHomeById(String homeId) {
+    public String deleteHomeById(String homeId) {
         homeRepository.deleteHomeById(homeId);
+        return "Deleted!";
     }
 
     @Override
-    public void deleteHomeProductById(String homeTitleId) {
-        homeProductsRepository.deleteHomeProductById(homeTitleId);
+    public String deleteHomeProductById(String homeProductId) {
+        homeProductsRepository.deleteHomeProductById(homeProductId);
+        return "Deleted!";
     }
 }

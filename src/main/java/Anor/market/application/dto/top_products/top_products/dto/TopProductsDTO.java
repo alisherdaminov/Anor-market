@@ -1,5 +1,6 @@
 package Anor.market.application.dto.top_products.top_products.dto;
 
+import Anor.market.application.dto.catalog.product.comments.dto.CommentsDTO;
 import Anor.market.application.dto.catalog.product.images.ProductImageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

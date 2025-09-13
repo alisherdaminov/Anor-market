@@ -3,6 +3,7 @@ package Anor.market.application.mapper.top_products;
 import Anor.market.application.dto.top_products.top_products.create.TopProductsCreateDTO;
 import Anor.market.application.dto.top_products.top_products.dto.TopProductsDTO;
 import Anor.market.application.dto.top_products.top_products.update.TopProductsUpdateDTO;
+import Anor.market.application.mapper.catalog.product.comments.CommentsMapper;
 import Anor.market.application.mapper.catalog.product.image.ProductImageMapper;
 import Anor.market.domain.model.top_products.TopProductsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class TopProductsMapper {
 
     @Autowired
     private ProductImageMapper productImageMapper;
+    @Autowired
+    private CommentsMapper commentsMapper;
 
     /// DTO TO ENTITY
     public TopProductsEntity toEntity(TopProductsCreateDTO createDTO) {
