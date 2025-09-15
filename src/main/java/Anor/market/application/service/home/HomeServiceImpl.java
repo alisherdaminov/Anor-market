@@ -6,7 +6,6 @@ import Anor.market.application.dto.home.dto.HomeDTO;
 import Anor.market.application.dto.home.home_product.HomeProductsDTO;
 import Anor.market.application.mapper.home.HomeMapper;
 import Anor.market.application.mapper.home.home_product.HomeProductsMapper;
-import Anor.market.domain.model.catalog.product.images.ProductImageEntity;
 import Anor.market.domain.model.catalog.product.products.ProductEntity;
 import Anor.market.domain.model.home.HomeEntity;
 import Anor.market.domain.model.home.home_product.HomeProductsEntity;
@@ -20,11 +19,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/*
+* HomeServiceImpl implements HomeService that all products are sorted by price, discounts, created date and other features
+* those are coming form the DATABASE that is presenting in home part only by GET , but POST method is for creating home title name
+* and due to that title products will set
+* */
 @Service
 public class HomeServiceImpl implements HomeService {
 
@@ -41,6 +45,7 @@ public class HomeServiceImpl implements HomeService {
     private HomeProductsMapper homeProductsMapper;
 
 
+    /// CREATE A HOME TITLE
     @Override
     public HomeDTO createHome(HomeCreateDTO homeCreateDTO) {
 
@@ -84,6 +89,7 @@ public class HomeServiceImpl implements HomeService {
         return homeMapper.toDTO(homeEntity);
     }
 
+    /// GET ALL PRODUCT LIST BY SORTING
     @Override
     public List<HomeProductsDTO> getAllProductsById(String homeTitleId, HomeTitleCreateDTO homeTitleCreateDTO) {
 
@@ -103,12 +109,13 @@ public class HomeServiceImpl implements HomeService {
                 .collect(Collectors.toList());
     }
 
-
+    /// GET ALL HOME PRODUCTS LIST
     @Override
     public List<HomeDTO> getAllHome() {
         return homeRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(homeMapper::toDTO).toList();
     }
 
+    /// UPDATE HOME TITLE BY ID
     @Override
     public HomeDTO updateHome(String homeId, HomeCreateDTO homeCreateDTO) {
         HomeEntity home = homeRepository.findByStringId(homeId).orElseThrow(() -> new AppBadException("Home title id not found!"));
@@ -117,12 +124,14 @@ public class HomeServiceImpl implements HomeService {
         return homeMapper.toDTO(homeEntity);
     }
 
+    /// DELETE HOME TITLE BY ID
     @Override
     public String deleteHomeById(String homeId) {
         homeRepository.deleteHomeById(homeId);
         return "Deleted!";
     }
 
+    /// DELETE HOME PRODUCT BY ID
     @Override
     public String deleteHomeProductById(String homeProductId) {
         homeProductsRepository.deleteHomeProductById(homeProductId);
